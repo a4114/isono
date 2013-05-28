@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
+import controllers.Application;
+
 import scala.annotation.meta.getter;
 
 
@@ -29,6 +31,10 @@ public final class CommentCenter {
             list.add(comment);
             commentListMap.put(channelURI, list);         
         }
+        
+        
+        //コメントを投げる
+        Application.UpdateComment(comment);
         
     }
     
