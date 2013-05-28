@@ -1,10 +1,9 @@
-@(chId: String)
+@(chURI: String)
 
 @main("視聴ページ") {
     <h1>視聴ページ</h1>
-    <h2>@chId</h2>
-    <form action="@chId/update" method="post">
-        <input type="text">
+    <h2>@chURI</h2>
+    <form action="@chURI/update" method="post">
         <input type="submit" value="comment"> 
     </form>
 }

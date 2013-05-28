@@ -3,13 +3,25 @@
 # ~~~~
 
 # メニューページ
-GET     /                           controllers.Application.index()
+GET     /                                controllers.Application.index()
 
 # 視聴ページ
-GET     /watch/:chURI                controllers.Application.watch(chURI:String)
+GET     /watch/:channelURI               controllers.Application.watch(channelURI:String)
 
 # コメント投稿
-POST    /watch/:chURI/update         controllers.Application.updateComment(chURI:String)
+POST    /watch/:channelURI/update        controllers.Application.updateComment(channelURI:String)
+
+# 枠作成ページ
+GET     /newChannel                      controllers.Application.newChannel()
+
+# 枠作成
+POST    /newChannel/update               controllers.Application.updateChannel()
+
+# 配信ページ
+GET     /broadcast/:channelURI           controllers.Application.broadcast(channelURI:String)
+
+# 投稿者コメント
+POST    /broadcast/:channelURI/update    controllers.Application.updateOwnerComment(channelURI:String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

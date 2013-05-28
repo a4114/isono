@@ -1,0 +1,9 @@
+@(chURI: String)
+
+@main("配信ページ") {
+    <h1>配信ページ</h1>
+    <h2>@chURI</h2>
+    <form action="@chURI/update" method="post">
+        <input type="submit" value="owner comment"> 
+    </form>    
+}
