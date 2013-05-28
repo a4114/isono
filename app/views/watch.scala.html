@@ -1,0 +1,10 @@
+@(chId: String)
+
+@main("視聴ページ") {
+    <h1>視聴ページ</h1>
+    <h2>@chId</h2>
+    <form action="@chId/update" method="post">
+        <input type="text">
+        <input type="submit" value="comment"> 
+    </form>
+}

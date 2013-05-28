@@ -2,8 +2,14 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# Home page
+# メニューページ
 GET     /                           controllers.Application.index()
+
+# 視聴ページ
+GET     /watch/:chURI                controllers.Application.watch(chURI:String)
+
+# コメント投稿
+POST    /watch/:chURI/update         controllers.Application.updateComment(chURI:String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)
