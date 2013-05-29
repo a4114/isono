@@ -108,7 +108,14 @@ public class Application extends Controller {
         return internalServerError("oauth_token = " + oauth_token + "\n" + "oauth_verifier = " + oauth_verifier);
     }
 
- 
+
+    public static Result checkLoginState(){
+    	String oauth_token = session("oauth_token");
+    	String oauth_verifier = session("oauth_verifier");
+    	return internalServerError("☝( ◠‿◠ )☝oauth_token = " + oauth_token + "\n" + "oauth_verifier = " + oauth_verifier);    	
+    	
+    }
+    
     
     public static void UpdateComment(Comment comment){
         
