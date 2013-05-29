@@ -39,7 +39,7 @@ public class Application extends Controller {
     }
     
     //コメントを投稿
-    public static Result updateComment(String channelURI) {
+    public static Result postComment(String channelURI) {
     	Map<String, String[]> requestBody = request().body().asFormUrlEncoded();
     	String context = requestBody.containsKey("text") ? requestBody.get("text")[0] : "";
     	Comment comment = new Comment("username", context, "tag", "channel");
