@@ -1,9 +1,17 @@
 package controllers;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.codehaus.jackson.JsonNode;
+
+import controllers.Application.User;
+
 import models.Comment;
 import play.*;
 import play.libs.Comet;
 import play.libs.Akka;
+import play.libs.Json;
 import play.mvc.*;
 import akka.actor.*;
 import views.html.*;
@@ -11,7 +19,7 @@ import static java.util.concurrent.TimeUnit.*;
 import scala.concurrent.duration.Duration;
 
 public class Application extends Controller {
-	final static ActorRef cometManager = CometManager.instance;
+	final static CometManager cometManager = new CometManager;
 	
 	//メインページにアクセス
     public static Result index() {
@@ -27,17 +35,18 @@ public class Application extends Controller {
     public static Result connectComet(String channelURI) {
     	return ok(new Comet("parent.getComment") { 
     		public void onConnected() {
-    			System.out.println("connect");
+    			cometManager.entrance(this);
             }
     	});
     }
     
     //コメントを投稿
     public static Result updateComment(String channelURI) {
-    	
-    	
-    	//視聴ページにリダイレクト
-        return redirect("/watch/" + channelURI);
+    	Map<String, String[]> requestBody = request().body().asFormUrlEncoded();
+    	String context = requestBody.containsKey("text") ? requestBody.get("text")[0] : "";
+    	Comment comment = new Comment("username", context, "tag", "channel");
+    	cometManager.tell(comment, null);
+    	return ok("");
     }
     
     //枠作成ページにアクセス
@@ -66,26 +75,32 @@ public class Application extends Controller {
         
     }
     
+    public static class User {
+    }   
+    
     //Comet管理クラス
     public static class CometManager extends UntypedActor {
-    	//
-    	static ActorRef instance = Akka.system().actorOf(new Props(CometManager.class));
-        // staticコンストラクタで実行間隔を指定
-        static {
-        	Akka.system().scheduler().schedule(
-        			Duration.Zero(),
-        			Duration.create(100, MILLISECONDS),
-        			instance, "check",  Akka.system().dispatcher()
-        			);
+    	//Actor
+    	final static ActorRef instance = Akka.system().actorOf(new Props(CometManager.class));
+    	final static public HashMap<Comet,User> sockets = new HashMap<Comet,User>();
+        
+        //
+        public void entrance(Comet comet) {
+        	sockets.put(comet, new User());
         }
         
         //コメントを受け取ったときの処理
-        public void sentMessage() {
-        	
+        public void sendComment(Comment cmtObj) {
+        	JsonNode comment = Json.toJson(cmtObj);
+        	for(Map.Entry<Comet,User> ck : sockets.entrySet()) {
+        		ck.getKey().sendMessage(comment);
+        	}
         }
     	
     	public void onReceive(Object message) {
-    		
+    		if(message instanceof Comment) {
+    			this.sendComment((Comment)message);
+    		}
     	}
     }
 }

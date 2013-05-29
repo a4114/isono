@@ -17,6 +17,8 @@
   		var commentForm = $("#commentForm");
   		//投稿ボタンが押されたら実行
   		commentForm.on("submit",function(e){
+  			//フォームを送信したときにページ遷移しないようにする
+  			e.preventDefault();
   			//ajaxで非同期にフォームを送信
   			$.ajax({
                 type: commentForm.attr("method"),
