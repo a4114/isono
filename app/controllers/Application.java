@@ -95,13 +95,17 @@ public class Application extends Controller {
             return internalServerError("Twitter4jの例外");
         }
     }
+    
+//    public static Result checkLoginState
 
 
     public static Result twitterCallback(){
         String oauth_token = request().queryString().get("oauth_token")[0];
+        session("oauth_token", oauth_token);
         String oauth_verifier = request().queryString().get("oauth_verifier")[0];
+        session("oauth_verifier", oauth_verifier);
       
-        return internalServerError();
+        return internalServerError("oauth_token = " + oauth_token + "\n" + "oauth_verifier = " + oauth_verifier);
     }
 
  
