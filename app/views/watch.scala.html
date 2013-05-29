@@ -5,14 +5,29 @@
     <h2>@channelURI</h2>
     
     <form id="commentForm" action="./@channelURI/update" method="POST">
-        <input type="submit" value="comment"> 
+    	<input id="message" type="text" name="text" placeholder="comment" />
+        <input type="submit" value="投稿"> 
     </form>
     
     <iframe style="display:none" id="comet" src="./@channelURI/connectComet"></iframe>
     
     <!-- jQueryのソース -->
     <script type="text/javascript" charset="utf-8">
-    	//Cometレスポンスを定期的にロード
+    	//コメントフォームを変数に代入
+  		var commentForm = $("#commentForm");
+  		//投稿ボタンが押されたら実行
+  		commentForm.on("submit",function(e){
+  			//ajaxで非同期にフォームを送信
+  			$.ajax({
+                type: commentForm.attr("method"),
+                url: commentForm.attr("action"),
+                data: commentForm.serialize(),
+                success: function(data, dataType){$("#message").val("");},
+                error: function(XMLHttpRequest, textStatus, errorThrown){}
+  			});
+  		});
+    
+    	//Cometレスポンスから実行されるメソッド
     	var getComment = function(comments){
     			
     	}
