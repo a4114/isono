@@ -1,9 +1,20 @@
-@(chURI: String)
+@(channelURI: String)
 
 @main("視聴ページ") {
     <h1>視聴ページ</h1>
-    <h2>@chURI</h2>
-    <form action="@chURI/update" method="post">
+    <h2>@channelURI</h2>
+    
+    <form id="commentForm" action="./@channelURI/update" method="POST">
         <input type="submit" value="comment"> 
     </form>
+    
+    <iframe style="display:none" id="comet" src="./@channelURI/connectComet"></iframe>
+    
+    <!-- jQueryのソース -->
+    <script type="text/javascript" charset="utf-8">
+    	//Cometレスポンスを定期的にロード
+    	var getComment = function(comments){
+    			
+    	}
+    </script>
 }

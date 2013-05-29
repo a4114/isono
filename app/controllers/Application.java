@@ -2,6 +2,7 @@ package controllers;
 
 import models.Comment;
 import play.*;
+import play.libs.Comet;
 import play.mvc.*;
 
 import views.html.*;
@@ -15,6 +16,15 @@ public class Application extends Controller {
     //視聴ページにアクセス
     public static Result watch(String channelURI) {
         return ok(watch.render(channelURI));
+    }
+    
+    //コメットソケットを作成
+    public static Result connectComet(String channelURI) {
+    	return ok(new Comet("parent.getComment") { 
+    		public void onConnected() {
+    			System.out.println("connect");
+            }
+    	});
     }
     
     //コメントを投稿
@@ -48,5 +58,9 @@ public class Application extends Controller {
     public static void UpdateComment(Comment comment){
         
     }
-  
+    
+    //Comet管理クラス
+    public static class CometManager {
+    	
+    }
 }
