@@ -5,7 +5,7 @@
     <h2>@channelURI</h2>
     
     <form id="commentForm" action="./@channelURI/update" method="POST">
-    	<input id="message" type="text" name="text" placeholder="comment" />
+    	<input id="comment" type="text" name="text" placeholder="comment" />
         <input type="submit" value="投稿"> 
     </form>
     
@@ -24,14 +24,16 @@
                 type: commentForm.attr("method"),
                 url: commentForm.attr("action"),
                 data: commentForm.serialize(),
-                success: function(data, dataType){$("#message").val("");},
+                //送信に成功したらフォームのテキストエリアをクリアする
+                success: function(data, dataType){$("#comment").val("");},
                 error: function(XMLHttpRequest, textStatus, errorThrown){}
   			});
   		});
     
     	//Cometレスポンスから実行されるメソッド
     	var getComment = function(comments){
-    			
+    		//ここにコメントに対する処理を記述する
+    		alert(comments.context);
     	}
     </script>
 }

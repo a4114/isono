@@ -5,12 +5,11 @@ import java.util.Map;
 
 import org.codehaus.jackson.JsonNode;
 
-import controllers.Application.User;
-
 import models.Comment;
+import models.User;
+
 import play.*;
 import play.libs.Comet;
-import play.libs.Akka;
 import play.libs.Json;
 import play.mvc.*;
 import akka.actor.*;
@@ -19,8 +18,7 @@ import static java.util.concurrent.TimeUnit.*;
 import scala.concurrent.duration.Duration;
 
 public class Application extends Controller {
-	final static CometManager cometManager = new CometManager;
-	
+
 	//メインページにアクセス
     public static Result index() {
         return ok(index.render("メインページ"));
@@ -35,7 +33,7 @@ public class Application extends Controller {
     public static Result connectComet(String channelURI) {
     	return ok(new Comet("parent.getComment") { 
     		public void onConnected() {
-    			cometManager.entrance(this);
+    			CometManager.entrance(this);
             }
     	});
     }
@@ -45,7 +43,7 @@ public class Application extends Controller {
     	Map<String, String[]> requestBody = request().body().asFormUrlEncoded();
     	String context = requestBody.containsKey("text") ? requestBody.get("text")[0] : "";
     	Comment comment = new Comment("username", context, "tag", "channel");
-    	cometManager.tell(comment, null);
+    	CometManager.sendComment(comment);
     	return ok("");
     }
     
@@ -73,34 +71,25 @@ public class Application extends Controller {
    
     public static void UpdateComment(Comment comment){
         
-    }
-    
-    public static class User {
-    }   
+    }  
     
     //Comet管理クラス
-    public static class CometManager extends UntypedActor {
-    	//Actor
-    	final static ActorRef instance = Akka.system().actorOf(new Props(CometManager.class));
+    public static class CometManager{
+    	//キー：Comet　値：ユーザ
     	final static public HashMap<Comet,User> sockets = new HashMap<Comet,User>();
         
-        //
-        public void entrance(Comet comet) {
+        //視聴ページにアクセス時にコレクションにCometとユーザを追加する
+        public static void entrance(Comet comet) {
         	sockets.put(comet, new User());
         }
         
-        //コメントを受け取ったときの処理
-        public void sendComment(Comment cmtObj) {
-        	JsonNode comment = Json.toJson(cmtObj);
+        //コメントを受け取ってJson形式でクライアントに投げる
+        public static void sendComment(Comment comment) {
+        	JsonNode jcomment = Json.toJson(comment);
         	for(Map.Entry<Comet,User> ck : sockets.entrySet()) {
-        		ck.getKey().sendMessage(comment);
+        		ck.getKey().sendMessage(jcomment);
         	}
         }
     	
-    	public void onReceive(Object message) {
-    		if(message instanceof Comment) {
-    			this.sendComment((Comment)message);
-    		}
-    	}
     }
 }
