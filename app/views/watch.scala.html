@@ -1,6 +1,10 @@
 @(channelURI: String)
 
 @main("視聴ページ") {
+    <script type="text/javascript">
+        
+
+    </script>
     <h1>視聴ページ</h1>
     <h2>@channelURI</h2>
     
@@ -9,31 +13,72 @@
         <input type="submit" value="投稿"> 
     </form>
     
+    <h1 class="title">Scrolling Comment</h1>
+    <div style="position:relative;"><!-- ビデオとコメントが変なところ行かないように囲っておく -->
+        <div id="view">
+            <video src="http://nc07.ff-in.dwango.co.jp:8080/hls/test.m3u8" width="320" height="240"  onclick="this.play()" controls autoplay></video>
+            <div id="comment">
+            </div>
+        </div>
+    </div>
+
     <iframe style="display:none" id="comet" src="./@channelURI/connectComet"></iframe>
     
     <!-- jQueryのソース -->
     <script type="text/javascript" charset="utf-8">
-    	//コメントフォームを変数に代入
-  		var commentForm = $("#commentForm");
-  		//投稿ボタンが押されたら実行
-  		commentForm.on("submit",function(e){
-  			//フォームを送信したときにページ遷移しないようにする
-  			e.preventDefault();
-  			//ajaxで非同期にフォームを送信
-  			$.ajax({
+    //コメントフォームを変数に代入
+        var commentForm = $("#commentForm");
+        //投稿ボタンが押されたら実行
+        commentForm.on("submit",function(e){
+        //フォームを送信したときにページ遷移しないようにする
+        e.preventDefault();
+        //ajaxで非同期にフォームを送信
+        $.ajax({
                 type: commentForm.attr("method"),
                 url: commentForm.attr("action"),
                 data: commentForm.serialize(),
                 //送信に成功したらフォームのテキストエリアをクリアする
                 success: function(data, dataType){$("#comment").val("");},
                 error: function(XMLHttpRequest, textStatus, errorThrown){}
-  			});
-  		});
+        });
+        });
     
-    	//Cometレスポンスから実行されるメソッド
-    	var getComment = function(comment){
-    		//ここにコメントに対する処理を記述する
-    		alert(comment.context);
-    	}
+    //Cometレスポンスから実行されるメソッド
+        var getComment = function(comment){
+            //ここにコメントに対する処理を記述する
+            alert(comment.context);
+        }
+        
+        var Comment = {
+            commentBox : null,
+            lastComment : parseInt(new Date()/1000),
+            lastCommentHeight:1,
+            shootComment : function(content){
+                //
+                //コメントを追加するDOMを探す．1回だけ
+                //
+                if(this.commentBox == null) this.commentBox = $("#comment");
+                
+                //
+                //新しいコメントを追加，流す．
+                //
+                //新しく生成したコメントをキャッシュしておく
+                newComment = $('<div class="comment">' + content  +'</div>')
+                                .appendTo(this.commentBox);
+                
+                if(parseInt(new Date() / 1000) - this.lastComment < 5){
+                    newComment.css('top',  this.lastCommentHeight + 'em');
+                    this.lastCommentHeight++;
+                }else{
+                    this.lastCommentHeight = 1;
+                }
+                
+                newComment.animate( {'left' : (-330 - newComment.width()) + 'px'}, {duration : 5000, easing : 'linear'});
+                
+                //最後のコメントが入力された時間
+                this.lastComment = parseInt(new Date()/1000);
+            }
+        }
+        
     </script>
 }
