@@ -1,17 +1,54 @@
-@(chURI: String)
+@(channelURI: String)
 
 @main("視聴ページ") {
     <script type="text/javascript">
-        jQuery(function(){
-            Comment.shootComment('aiueo');
-            setTimeout("Comment.shootComment('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbb cccccc')",2000);
-            setTimeout("Comment.shootComment('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbb cccccc')",3000);
-            setTimeout("Comment.shootComment('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')",4000);
-            
-            setTimeout("Comment.shootComment('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbb cccccc')",2000);
-            setTimeout("Comment.shootComment('aあああああああああああああああああああ')",10000);
-            
+        
+
+    </script>
+    <h1>視聴ページ</h1>
+    <h2>@channelURI</h2>
+    
+    <form id="commentForm" action="./@channelURI/update" method="POST">
+    	<input id="comment" type="text" name="text" placeholder="comment" />
+        <input type="submit" value="投稿"> 
+    </form>
+    
+<<<<<<< HEAD
+    <h1 class="title">Scrolling Comment</h1>
+    <div style="position:relative;"><!-- ビデオとコメントが変なところ行かないように囲っておく -->
+        <div id="view">
+            <video src="http://nc07.ff-in.dwango.co.jp:8080/hls/test.m3u8" width="320" height="240"  onclick="this.play()" controls autoplay></video>
+            <div id="comment">
+            </div>
+        </div>
+    </div>
+
+    <iframe style="display:none" id="comet" src="./@channelURI/connectComet"></iframe>
+    
+    <!-- jQueryのソース -->
+    <script type="text/javascript" charset="utf-8">
+/   /コメントフォームを変数に代入
+        var commentForm = $("#commentForm");
+        //投稿ボタンが押されたら実行
+        commentForm.on("submit",function(e){
+        //フォームを送信したときにページ遷移しないようにする
+        e.preventDefault();
+        //ajaxで非同期にフォームを送信
+        $.ajax({
+                type: commentForm.attr("method"),
+                url: commentForm.attr("action"),
+                data: commentForm.serialize(),
+                //送信に成功したらフォームのテキストエリアをクリアする
+                success: function(data, dataType){$("#comment").val("");},
+                error: function(XMLHttpRequest, textStatus, errorThrown){}
         });
+        });
+    
+    //Cometレスポンスから実行されるメソッド
+        var getComment = function(comment){
+            //ここにコメントに対する処理を記述する
+            alert(comment.context);
+        }
         
         var Comment = {
             commentBox : null,
@@ -45,20 +82,4 @@
         }
         
     </script>
-    <h1>視聴ページ</h1>
-    <h2>@chURI</h2>
-    <form action="@chURI/udpdate" method="post">
-        <input type="submit" value="comment"> 
-    </form>
-    
-    <h1 class="title">Scrolling Comment</h1>
-    <div style="position:relative;"><!-- ビデオとコメントが変なところ行かないように囲っておく -->
-        <div id="view">
-            <video src="http://nc07.ff-in.dwango.co.jp:8080/hls/test.m3u8" width="320" height="240"  onclick="this.play()" controls autoplay></video>
-            <div id="comment">
-            </div>
-        </div>
-    </div>
-
-    <textarea style="position:relative;" id="que" cols="40" rows="20"></textarea>
 }

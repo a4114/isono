@@ -15,7 +15,6 @@ public final class CommentCenter {
     // key : ChannelName
     // Value : コメントリスト
     public final static HashMap<String,List<Comment>> commentListMap = new HashMap<>();
-   
 
     public static void AddComment(Comment comment){
         String channelURI = comment.getChannelURI();

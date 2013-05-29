@@ -9,7 +9,10 @@ GET     /                                controllers.Application.index()
 GET     /watch/:channelURI               controllers.Application.watch(channelURI:String)
 
 # コメント投稿
-POST    /watch/:channelURI/update        controllers.Application.updateComment(channelURI:String)
+POST    /watch/:channelURI/update        controllers.Application.postComment(channelURI:String)
+
+#コメット作成
+GET    /watch/:channelURI/connectComet   controllers.Application.connectComet(channelURI:String)
 
 # 枠作成ページ
 GET     /newChannel                      controllers.Application.newChannel()
