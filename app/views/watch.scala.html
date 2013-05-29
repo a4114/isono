@@ -3,20 +3,30 @@
 @main("視聴ページ") {
     <script type="text/javascript">
         jQuery(function(){
-        var comment = $("#comment");
-        comment.append(
-           $('<div class="comment">sample2</div>')
-               .animate(
-                   {'right' : '350px'},
-                   {duration : 3000}
-                )
-           );
+            Comment.nagasuComment('aiueo');
         });
+        
+        var Comment = {
+            commentBox : null,
+            nagasuComment : function(content){
+                //コメントを追加するDOMを探す．1回だけ
+                if(this.commentBox == null) this.commentBox = $("#comment");
+                
+                //新しいコメントを追加，流す．
+                this.commentBox.append(
+                    $('<div class="comment">' + content + '</div>')
+                        .animate(
+                            {'right' : '350px'},
+                            {duration : 5000}
+                    )
+                );
+            }
+        }
         
     </script>
     <h1>視聴ページ</h1>
     <h2>@chURI</h2>
-    <form action="@chURI/update" method="post">
+    <form action="@chURI/udpdate" method="post">
         <input type="submit" value="comment"> 
     </form>
     
