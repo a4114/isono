@@ -11,6 +11,9 @@ GET     /watch/:channelURI               controllers.Application.watch(channelUR
 # コメント投稿
 POST    /watch/:channelURI/update        controllers.Application.updateComment(channelURI:String)
 
+#コメット作成
+GET    /watch/:channelURI/connectComet   controllers.Application.connectComet(channelURI:String)
+
 # 枠作成ページ
 GET     /newChannel                      controllers.Application.newChannel()
 
