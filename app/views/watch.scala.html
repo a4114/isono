@@ -8,9 +8,8 @@
             setTimeout("Comment.shootComment('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbb cccccc')",3000);
             setTimeout("Comment.shootComment('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')",4000);
             
-            setTimeout("Comment.shootComment('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')",2000);
+            setTimeout("Comment.shootComment('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbb cccccc')",2000);
             setTimeout("Comment.shootComment('aあああああああああああああああああああ')",10000);
-            setTimeout("Comment.shootComment('aあああああああああああああああああああ')",12000);
             
         });
         
@@ -31,12 +30,12 @@
                 newComment = $('<div class="comment">' + content  +'</div>')
                                 .appendTo(this.commentBox);
                 
-                    if(parseInt(new Date() / 1000) - this.lastComment < 5){
-                        newComment.css('top',  this.lastCommentHeight + 'em');
-                        this.lastCommentHeight++;
-                    }else{
-                        this.lastCommentHeight = 1;
-                    }
+                if(parseInt(new Date() / 1000) - this.lastComment < 5){
+                    newComment.css('top',  this.lastCommentHeight + 'em');
+                    this.lastCommentHeight++;
+                }else{
+                    this.lastCommentHeight = 1;
+                }
                 
                 newComment.animate( {'left' : (-330 - newComment.width()) + 'px'}, {duration : 5000, easing : 'linear'});
                 
@@ -61,5 +60,5 @@
         </div>
     </div>
 
-<textarea style="position:relative;" id="que" cols="40" rows="20"></textarea>
+    <textarea style="position:relative;" id="que" cols="40" rows="20"></textarea>
 }
