@@ -30,20 +30,20 @@ public class Application extends Controller {
     }
     
     //コメットソケットを作成
-    public static Result connectComet(String channelURI) {
+    public static Result connectComet(final String channelURI) {
     	return ok(new Comet("parent.getComment") { 
     		public void onConnected() {
-    			CometManager.entrance(this);
+    			CometManager.entrance(channelURI, this);
             }
     	});
     }
     
     //コメントを投稿
-    public static Result postComment(String channelURI) {
+    public static Result postComment(final String channelURI) {
     	Map<String, String[]> requestBody = request().body().asFormUrlEncoded();
     	String context = requestBody.containsKey("text") ? requestBody.get("text")[0] : "";
-    	Comment comment = new Comment("username", context, "tag", "channel");
-    	CometManager.sendComment(comment);
+    	Comment comment = new Comment("username", context, "tag", channelURI);
+    	CometManager.sendComment(channelURI, comment);
     	return ok("");
     }
     
@@ -75,18 +75,26 @@ public class Application extends Controller {
     
     //Comet管理クラス
     public static class CometManager{
-    	//キー：Comet　値：ユーザ
-    	final static public HashMap<Comet,User> sockets = new HashMap<Comet,User>();
+    	//枠URI,Comet,ユーザを関連づける二次元ハッシュ
+    	final static public HashMap<String, HashMap<Comet, User>> sockets = 
+    			new HashMap<String, HashMap<Comet, User>>();
         
-        //視聴ページにアクセス時にコレクションにCometとユーザを追加する
-        public static void entrance(Comet comet) {
-        	sockets.put(comet, new User());
+        //視聴ページアクセス時コレクションにCometとユーザを追加する
+        public static void entrance(String channelURI, Comet comet) {
+        	if(sockets.containsKey(channelURI)){
+        		sockets.get(channelURI).put(comet, new User());
+        	}else{
+        		HashMap<Comet, User> map = new HashMap<Comet, User>();
+        		map.put(comet, new User());
+        		sockets.put(channelURI, map);
+        	}
         }
         
         //コメントを受け取ってJson形式でクライアントに投げる
-        public static void sendComment(Comment comment) {
+        public static void sendComment(String channelURI, Comment comment) {
         	JsonNode jcomment = Json.toJson(comment);
-        	for(Map.Entry<Comet,User> ck : sockets.entrySet()) {
+        	HashMap<Comet, User> map = sockets.get(channelURI);
+        	for(Map.Entry<Comet,User> ck : map.entrySet()) {
         		ck.getKey().sendMessage(jcomment);
         	}
         }
