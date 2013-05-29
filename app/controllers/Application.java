@@ -3,22 +3,30 @@ package controllers;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.codehaus.jackson.JsonNode;
-
 import models.Comment;
 import models.User;
 
-import play.*;
+import org.codehaus.jackson.JsonNode;
+
+import play.cache.Cache;
 import play.libs.Comet;
 import play.libs.Json;
-import play.mvc.*;
-import akka.actor.*;
-import views.html.*;
-import static java.util.concurrent.TimeUnit.*;
-import scala.concurrent.duration.Duration;
+import play.mvc.Controller;
+import play.mvc.Result;
+import scala.annotation.meta.param;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.auth.RequestToken;
+import views.html.broadcast;
+import views.html.index;
+import views.html.newChannel;
+import views.html.watch;
 
 public class Application extends Controller {
-
+    static private final String CONSUMER_KEY = "tIRpAmBs6UtryMFGPL4wg";
+    static private final String CONSUMER_SECRET = "3Uak8Nk6euyBzxRsitDZTwrnSTZcZKTZlHe3WGwXmk";
+    
 	//メインページにアクセス
     public static Result index() {
         return ok(index.render("メインページ"));
@@ -69,6 +77,34 @@ public class Application extends Controller {
         return redirect("/broadcast/" + channelURI);
     }
    
+   
+
+    public static Result login(){
+        TwitterFactory twitterFactory = new TwitterFactory();
+        Twitter twitter = twitterFactory.getInstance();
+        twitter.setOAuthConsumer(CONSUMER_KEY,CONSUMER_SECRET);
+
+        try {
+            RequestToken reqToken = twitter.getOAuthRequestToken();
+
+            Cache.set("RequestToken", reqToken);
+            Cache.set("Twitter", twitter);
+            return redirect(reqToken.getAuthorizationURL());
+        } catch (TwitterException e) {
+            e.printStackTrace();
+            return internalServerError("Twitter4jの例外");
+        }
+    }
+
+
+    public static Result twitterCallback(){
+        String oauth_token = request().queryString().get("oauth_token")[0];
+        String oauth_verifier = request().queryString().get("oauth_verifier")[0];
+      
+        return internalServerError();
+    }
+
+ 
     
     public static void UpdateComment(Comment comment){
         
