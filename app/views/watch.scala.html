@@ -1,9 +1,34 @@
 @(chURI: String)
 
 @main("視聴ページ") {
+    <script type="text/javascript">
+        jQuery(function(){
+        var comment = $("#comment");
+        comment.append(
+           $('<div class="comment">sample2</div>')
+               .animate(
+                   {'right' : '350px'},
+                   {duration : 3000}
+                )
+           );
+        });
+        
+    </script>
     <h1>視聴ページ</h1>
     <h2>@chURI</h2>
     <form action="@chURI/update" method="post">
         <input type="submit" value="comment"> 
     </form>
+    
+    <h1 class="title">Scrolling Comment</h1>
+    <div style="position:relative;"><!-- ビデオとコメントが変なところ行かないように囲っておく -->
+        <div id="view">
+            <video src="http://nc07.ff-in.dwango.co.jp:8080/hls/test.m3u8" width="320" height="240"  onclick="this.play()" controls autoplay></video>
+            <div id="comment">
+
+            </div>
+        </div>
+    </div>
+
+<textarea style="position:relative;" id="que" cols="40" rows="20"></textarea>
 }
