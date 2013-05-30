@@ -32,4 +32,5 @@ GET     /assets/*file               controllers.Assets.at(path="/public", file)
 
 #########Debug
 GET		/login						controllers.Application.login()
+GET		/checkloginstate			controllers.Application.checkLoginState()
 GET		/twitter/callback			controllers.Application.twitterCallback()
