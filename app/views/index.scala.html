@@ -1,7 +1,29 @@
 @(title: String)
-
 @main(title) {
-    <h1>@title</h1>
-    <a href="/watch/lv999999">視聴ページ</a>
-    <a href="/newChannel">枠作成</a>
+   
+    <div class="container-fluid">
+    　　　<h1>メーインページ</h1>
+         <div class="row-fluid">
+             <div class="span1"><h5>logo</h5></div> 
+             <div class="span10">
+                 <form class="navbar-search pull-left">
+                 <input type="text" class="search-query" placeholder="Search">           
+                 </form>
+             </div>
+             <div class="span1">
+                  <a class="btn" href="#"><i class="icon-search"></i></a>
+             </div>
+         </div>
+     
+     <div><a class="btn" href="/newChannel">配信ページ</i></a></div>
+           
+         
+        <ul class="nav nav-list">  
+            <li class="active"><a href="/watch/lv111111">番組名</a></li> 
+            <li class="divider"></li>  
+            <li class="active"><a href="/watch/lv999999">番組名</a></li>
+            <li class="divider"></li> 
+            <li class="active"><a href="/watch/lv999999">番組名</a></li>            
+        </ul> 
+   </div>
 }

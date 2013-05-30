@@ -1,9 +1,17 @@
 @(chURI: String)
 
 @main("視聴ページ") {
-    <h1>視聴ページ</h1>
-    <h2>@chURI</h2>
-    <form action="@chURI/update" method="post">
-        <input type="submit" value="comment"> 
-    </form>
+    <div class="container-fluid">    
+        <h1>視聴ページ</h1>
+        <h2>@chURI</h2>
+    
+        <video width="320" height="240" controls>
+        <source src="movie.mp4" type="video/mp4">
+        <source src="movie.ogg" type="video/ogg">
+        Your browser does not support the video tag.
+        </video>
+        <form action="@chURI/update" method="post">
+            <input type="submit" value="comment"> 
+        </form>  
+    </div>     
 }
