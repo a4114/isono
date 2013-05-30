@@ -34,7 +34,6 @@ public class Application extends Controller {
     	return ok(new Comet("parent.getComment") { 
     		public void onConnected() {
     			CometManager.entrance(channelURI, this);
-    			//CometManager.sendSize(channelURI);
             }
     	});
     }
