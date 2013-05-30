@@ -4,9 +4,10 @@
     <h1>視聴ページ</h1>
     <h2>@channelURI</h2>
     
-    <div id="player" style="background-color:#000000;width:400px;height:300px;overflow:scroll;"></div>
+    <div id="comment"></div>
+    
     <form id="commentForm" action="./@channelURI/update" method="POST">
-    	<input id="comment" type="text" name="text" placeholder="comment" />
+    	<input id="cmt" type="text" name="text" placeholder="comment" />
         <input type="submit" value="投稿"> 
     </form>
     
@@ -26,7 +27,7 @@
                 url: commentForm.attr("action"),
                 data: commentForm.serialize(),
                 //送信に成功したらフォームのテキストエリアをクリアする
-                success: function(data, dataType){$("#comment").val("");},
+                success: function(data, dataType){$("#cmt").val("");},
                 error: function(XMLHttpRequest, textStatus, errorThrown){}
   			});
   		});
@@ -34,9 +35,44 @@
     	//Cometレスポンスから実行されるメソッド
     	var getComment = function(comment){
     		//ここにコメントに対する処理を記述する
+    		Comment.shootComment(comment.context);
+    		/*
        		var player = $('#player');
        		player.append('<div><div style="color:#ffffff;" class="cmt">' + comment.context + '</div>');
        		player.scrollTop(player.scrollTop() + 100);
+       		*/
     	}
+    	
+        var Comment = {
+            commentBox : null,
+            lastComment : parseInt(new Date()/1000),
+            lastCommentHeight:1,
+            shootComment : function(content){
+                //
+                //コメントを追加するDOMを探す．1回だけ
+                //
+                if(this.commentBox == null) this.commentBox = $("#comment");
+                
+                //
+                //新しいコメントを追加，流す．
+                //
+                //新しく生成したコメントをキャッシュしておく
+                newComment = $('<div class="comment">' + content  +'</div>')
+                                .appendTo(this.commentBox);
+                
+                if(parseInt(new Date() / 1000) - this.lastComment < 5){
+                    newComment.css('top',  this.lastCommentHeight + 'em');
+                    this.lastCommentHeight++;
+                }else{
+                    this.lastCommentHeight = 1;
+                }
+                
+                newComment.animate( {'left' : (-330 - newComment.width()) + 'px'}, {duration : 5000, easing : 'linear'});
+                
+                //最後のコメントが入力された時間
+                this.lastComment = parseInt(new Date()/1000);
+            }
+        }
+ 	
     </script>
 }

@@ -27,4 +27,4 @@ GET     /broadcast/:channelURI           controllers.Application.broadcast(chann
 POST    /broadcast/:channelURI/update    controllers.Application.updateOwnerComment(channelURI:String)
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               　　　controllers.Assets.at(path="/public", file)
+GET     /assets/*file					 controllers.Assets.at(path="/public", file)
