@@ -10,7 +10,7 @@ import org.codehaus.jackson.JsonNode;
 import play.libs.Comet;
 import play.libs.Json;
 
-public class Channel {
+public class Channel implements Comparable<Channel>{
     private final String channelName;
     private final String channelURI;
     private final User hostUser;
@@ -75,5 +75,12 @@ public class Channel {
     public int hashCode(){
         return channelURI.hashCode();
     }
+
+    @Override
+    public int compareTo(Channel that) {
+        // TODO 自動生成されたメソッド・スタブ
+        return this.getChannelName().compareTo(that.getChannelName());
+    }
+
     
 }

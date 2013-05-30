@@ -1,11 +1,20 @@
 package controllers;
 
 
+import java.sql.Array;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
 
 import org.codehaus.jackson.JsonNode;
+import org.jboss.netty.channel.ChannelPipeline;
+
+import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
 import models.Channel;
 import models.CometAddvanced;
@@ -40,7 +49,11 @@ public class Application extends Controller {
     
 	//メインページにアクセス
     public static Result index() {
-        return ok(index.render("メインページ",channelList));
+       Channel[] array= (Channel[])channelList.values().toArray();
+       List<Channel> list = Arrays.asList(array);
+       java.util.Collections.sort(list);
+       
+        return ok(index.render("メインページ",list));
     }
     
     //視聴ページにアクセス
@@ -83,10 +96,10 @@ public class Application extends Controller {
 
     //枠を作成
     public static Result updateChannel() {
-    	String channelURI = "lv"+liveCount;
+    	String channelURI = "lv"+liveCount++;
     	
     	//チャンネルリストに新しいチャンネルを追加
-    	channelList.put(channelURI, (new Channel("光り手チャンネル",channelURI, new User())));
+    	channelList.put(channelURI, (new Channel("光り手チャンネル"+liveCount,channelURI, new User())));
     	
     	//配信ページにリダイレクト
     	return redirect("/broadcast/" + channelURI);
