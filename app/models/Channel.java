@@ -6,12 +6,9 @@ import java.util.HashMap;
 import java.util.List;
 
 import org.codehaus.jackson.JsonNode;
-import org.specs2.internal.scalaz.std.string;
 
-import play.api.libs.iteratee.internal;
 import play.libs.Comet;
 import play.libs.Json;
-import views.html.newChannel;
 
 public class Channel {
     private final String channelName;

@@ -8,6 +8,7 @@ import java.util.Map;
 import org.codehaus.jackson.JsonNode;
 
 import models.Channel;
+import models.CometAddvanced;
 import models.Comment;
 import models.User;
 
@@ -27,6 +28,15 @@ public class Application extends Controller {
     private static HashMap<String,Channel> channelList = new HashMap<>();
     private static int liveCount = 0;
     
+    public static void AddUserToChannel(String channelURI,Comet comet,User user) throws Exception{
+        if(channelList.containsKey(channelURI)){
+            channelList.get(channelURI).AddWatchingUser(comet, new User());
+        }else{
+            throw new Exception("不正な枠URIです");
+        }
+    }
+    
+    
 	//メインページにアクセス
     public static Result index() {
         return ok(index.render("メインページ"));
@@ -34,16 +44,19 @@ public class Application extends Controller {
     
     //視聴ページにアクセス
     public static Result watch(String channelURI) {
+        if(!channelList.containsKey(channelURI)){
+            //枠が開いてない
+            return notFound("枠が開いていません");
+        }
         return ok(watch.render(channelURI));
+        
     }
     
     //コメットソケットを作成
     public static Result connectComet(String channelURI) {
-    	return ok(new Comet("parent.getComment") { 
-    		public void onConnected() {
-    			CometManager.entrance(this);
-            }
-    	});
+        
+        //CometAddvancedを追加　初期化が違うくらいで後は一緒
+    	return ok(new CometAddvanced("parent.getComment",channelURI,new User()));
     }
     
     //コメントを投稿
@@ -54,8 +67,11 @@ public class Application extends Controller {
     	Comment comment = new Comment("username", context, "tag", "channel");
     	
     	//ここでComentCenterを使おう
-    	channelList.get(channelURI).BroadcastComment(comment);
-    	
+    	if(channelList.containsKey(channelURI)){
+    	    channelList.get(channelURI).BroadcastComment(comment);
+    	}else{
+    	    return internalServerError("投稿先の枠がありません");
+    	}
     	return ok("");
     }
     
@@ -68,6 +84,7 @@ public class Application extends Controller {
     public static Result updateChannel() {
     	String channelURI = "lv"+liveCount;
     	
+    	//チャンネルリストに新しいチャンネルを追加
     	channelList.put(channelURI, (new Channel("光り手チャンネル",channelURI, new User())));
     	
     	//配信ページにリダイレクト
