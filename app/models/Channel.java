@@ -2,19 +2,19 @@ package models;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import org.codehaus.jackson.JsonNode;
-
-import play.libs.Comet;
-import play.libs.Json;
+import akka.actor.Actor;
+import akka.actor.ActorRef;
+import akka.actor.ActorSystem;
+import akka.actor.Props;
+import akka.actor.dsl.Creators.Act;
 
 public class Channel implements Comparable<Channel>{
     private final String channelName;
     private final String channelURI;
     private final User hostUser;
-    private final HashMap<Comet,User> userMap;
+    private final ActorRef cometUserManager;
     private final Timestamp startTime;
     private final List<Comment> commentList;
     
@@ -22,7 +22,11 @@ public class Channel implements Comparable<Channel>{
         this.channelName = channelName;
         this.channelURI = URI;
         this.hostUser = hostUser;
-        userMap = new HashMap<>();
+        
+        //ここ
+        cometUserManager = CometUserManager.system.actorOf(new Props(CometUserManager.class));
+        cometUserManager.
+        
         startTime = new Timestamp(System.currentTimeMillis());
         commentList = new ArrayList<>();
     }
@@ -35,10 +39,6 @@ public class Channel implements Comparable<Channel>{
         return hostUser;
     }
 
-    public HashMap<Comet, User> getUserMap() {
-        return userMap;
-    }
-
     public Timestamp getStartTime() {
         return startTime;
     }
@@ -48,8 +48,8 @@ public class Channel implements Comparable<Channel>{
     }
     
     //視聴者をリストに追加する
-    public void AddWatchingUser(Comet comet,User user) {
-        userMap.put(comet, user);
+    public void AddWatchingUser(CometAddvanced cometAddvanced) {
+        cometUserManager.getSender().tell(cometAddvanced,cometUserManager.getSender());
     }
     
     //最新コメントをリストに追加する
@@ -57,13 +57,9 @@ public class Channel implements Comparable<Channel>{
         commentList.add(comment);
     }
    
-    //視聴者にコメントを配信する（同時にリストに追加）
+    //視聴者にコメントを配信する
     public void BroadcastComment(Comment newComment){
-        AddCommentList(newComment);
-        for(Comet userComet : userMap.keySet()){
-            JsonNode jcomment = Json.toJson(newComment);
-            userComet.sendMessage(jcomment);
-        }
+        cometUserManager.getSender().tell(newComment,cometUserManager.getSender());
     }
 
     public String getChannelURI() {
