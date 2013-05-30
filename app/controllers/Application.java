@@ -13,11 +13,11 @@ import play.libs.Comet;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
-import scala.annotation.meta.param;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
 import twitter4j.auth.RequestToken;
+import twitter4j.conf.ConfigurationBuilder;
 import views.html.broadcast;
 import views.html.index;
 import views.html.newChannel;
@@ -100,20 +100,44 @@ public class Application extends Controller {
 
 
     public static Result twitterCallback(){
-        String oauth_token = request().queryString().get("oauth_token")[0];
-        session("oauth_token", oauth_token);
-        String oauth_verifier = request().queryString().get("oauth_verifier")[0];
-        session("oauth_verifier", oauth_verifier);
+        String token = request().queryString().get("oauth_token")[0];
+        session("oauth_token", token);
+        String token_secret = request().queryString().get("oauth_verifier")[0];
+        session("oauth_verifier", token_secret);
       
-        return internalServerError("oauth_token = " + oauth_token + "\n" + "oauth_verifier = " + oauth_verifier);
+        return internalServerError("oauth_token = " + token + "\n" + "oauth_verifier = " + token_secret);
     }
 
 
     public static Result checkLoginState(){
-    	String oauth_token = session("oauth_token");
-    	String oauth_verifier = session("oauth_verifier");
-    	return internalServerError("☝( ◠‿◠ )☝oauth_token = " + oauth_token + "\n" + "oauth_verifier = " + oauth_verifier);    	
+    	String value="";
+    	String token = session("oauth_token");
+    	String token_secret = session("oauth_verifier");
+
+    	ConfigurationBuilder cb = new ConfigurationBuilder();
+    	cb.setDebugEnabled(true)
+    	  .setOAuthConsumerKey(CONSUMER_KEY)
+    	  .setOAuthConsumerSecret(CONSUMER_SECRET)
+    	  .setOAuthAccessToken(token)
+    	  .setOAuthAccessTokenSecret(token_secret);
+    	TwitterFactory tf = new TwitterFactory(cb.build());
+    	Twitter twitter = tf.getInstance();
     	
+    	String name="dummy";
+    	try {
+    		name = twitter.getScreenName();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	value += "token = " + token + "\ntoken_secret = " + token_secret + "\nようこそ、 " + name + "さん☝( ◠‿◠ )☝";
+		return internalServerError(value);
+//		return(internalServerError("☝( ◠‿◠ )☝ログインできなかったよ"));    		    	
+//    	return internalServerError("☝( ◠‿◠ )☝oauth_token = " + token + "\n" + "oauth_verifier = " + token_secret);    	
     }
     
     
