@@ -17,6 +17,7 @@ import scala.annotation.meta.param;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import views.html.broadcast;
 import views.html.index;
@@ -26,6 +27,7 @@ import views.html.watch;
 public class Application extends Controller {
     static private final String CONSUMER_KEY = "tIRpAmBs6UtryMFGPL4wg";
     static private final String CONSUMER_SECRET = "3Uak8Nk6euyBzxRsitDZTwrnSTZcZKTZlHe3WGwXmk";
+    static private RequestToken reqToken;
     
 	//メインページにアクセス
     public static Result index() {
@@ -85,7 +87,7 @@ public class Application extends Controller {
         twitter.setOAuthConsumer(CONSUMER_KEY,CONSUMER_SECRET);
 
         try {
-            RequestToken reqToken = twitter.getOAuthRequestToken();
+            reqToken = twitter.getOAuthRequestToken();
 
             Cache.set("RequestToken", reqToken);
             Cache.set("Twitter", twitter);
@@ -101,6 +103,19 @@ public class Application extends Controller {
         String oauth_token = request().queryString().get("oauth_token")[0];
         String oauth_verifier = request().queryString().get("oauth_verifier")[0];
       
+        Twitter twitter = (Twitter)Cache.get("Twitter");
+        
+        try{
+           
+            AccessToken accessToken= twitter.getOAuthAccessToken(oauth_verifier);
+            twitter.setOAuthAccessToken(accessToken);
+            System.out.println(twitter.getScreenName());
+        }catch(TwitterException e){
+            e.printStackTrace();
+        }
+        
+        
+        
         return internalServerError();
     }
 
