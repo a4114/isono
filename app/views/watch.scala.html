@@ -3,14 +3,16 @@
 @main("視聴ページ") {
     <h1>視聴ページ</h1>
     <h2>@channelURI</h2>
-    
-    <div id="comment"></div>
-    
+    <div id="view">
+        <video width="320" height="240" onclick="this.play();" controls autoplay>
+            <source src="http://nc07.ff-in.dwango.co.jp:8080/hls/test.m3u8"></source>
+        </video>
+        <div id="comment"></div>
+    </div>
     <form id="commentForm" action="./@channelURI/update" method="POST">
     	<input id="cmt" type="text" name="text" placeholder="comment" />
         <input type="submit" value="投稿"> 
     </form>
-    
     <iframe style="display:none" id="comet" src="./@channelURI/connectComet"></iframe>
     
     <!-- jQueryのソース -->
@@ -60,9 +62,9 @@
                 //新しいコメントを追加，流す．
                 //
                 //新しく生成したコメントをキャッシュしておく
-                newComment = $('<div class="comment">' + content  +'</div>')
+                newComment = $('<span class="comment">' + content  +'</span>')
                                 .appendTo(this.commentBox);
-                
+                $("body").append('<div>'+ newComment.width() +'</div>')
                 if(parseInt(new Date() / 1000) - this.lastComment < 5){
                     newComment.css('top',  this.lastCommentHeight + 'em');
                     this.lastCommentHeight++;
@@ -70,7 +72,12 @@
                     this.lastCommentHeight = 1;
                 }
                 
-                newComment.animate( {'left' : (-330 - newComment.width()) + 'px'}, {duration : 5000, easing : 'linear'});
+                newComment.css("right","-320px");
+                newComment.animate( {'right' :  newComment.width() + 'px'},
+                                    {duration : 5000,
+                                    easing : 'linear',
+                                    complete : function(){ newComment.remove();} 
+                                    } );
                 
                 //最後のコメントが入力された時間
                 this.lastComment = parseInt(new Date()/1000);
