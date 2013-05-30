@@ -34,6 +34,7 @@ public class Application extends Controller {
     	return ok(new Comet("parent.getComment") { 
     		public void onConnected() {
     			CometManager.entrance(channelURI, this);
+    			//CometManager.sendSize(channelURI);
             }
     	});
     }
@@ -42,9 +43,13 @@ public class Application extends Controller {
     public static Result postComment(final String channelURI) {
     	Map<String, String[]> requestBody = request().body().asFormUrlEncoded();
     	String context = requestBody.containsKey("text") ? requestBody.get("text")[0] : "";
-    	Comment comment = new Comment("username", context, "tag", channelURI);
+    	//タグを無効化
+    	Comment comment = new Comment("username", escapeTag(context), "tag", channelURI);
     	CometManager.sendComment(channelURI, comment);
     	return ok("");
+    }
+    public static String escapeTag(String text){
+    	return text.replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll("&", "&amp;").replaceAll("\"", "＆quot;").replaceAll("\'", "＆#039;");
     }
     
     //枠作成ページにアクセス
@@ -96,6 +101,13 @@ public class Application extends Controller {
         	HashMap<Comet, User> map = sockets.get(channelURI);
         	for(Map.Entry<Comet,User> ck : map.entrySet()) {
         		ck.getKey().sendMessage(jcomment);
+        	}
+        }
+        
+        public static void sendSize(String channelURI) {
+        	HashMap<Comet, User> map = sockets.get(channelURI);
+        	for(Map.Entry<Comet,User> ck : map.entrySet()) {
+        		ck.getKey().sendMessage(Integer.toString(map.size()));
         	}
         }
     	
