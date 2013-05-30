@@ -1,0 +1,65 @@
+@(chURI: String)
+
+@main("視聴ページ") {
+    <script type="text/javascript">
+        jQuery(function(){
+            Comment.shootComment('aiueo');
+            setTimeout("Comment.shootComment('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbb cccccc')",2000);
+            setTimeout("Comment.shootComment('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa bbbbbbbbbb cccccc')",3000);
+            setTimeout("Comment.shootComment('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')",4000);
+            
+            setTimeout("Comment.shootComment('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa')",2000);
+            setTimeout("Comment.shootComment('aあああああああああああああああああああ')",10000);
+            setTimeout("Comment.shootComment('aあああああああああああああああああああ')",12000);
+            
+        });
+        
+        var Comment = {
+            commentBox : null,
+            lastComment : parseInt(new Date()/1000),
+            lastCommentHeight:1,
+            shootComment : function(content){
+                //
+                //コメントを追加するDOMを探す．1回だけ
+                //
+                if(this.commentBox == null) this.commentBox = $("#comment");
+                
+                //
+                //新しいコメントを追加，流す．
+                //
+                //新しく生成したコメントをキャッシュしておく
+                newComment = $('<div class="comment">' + content  +'</div>')
+                                .appendTo(this.commentBox);
+                
+                if(parseInt(new Date() / 1000) - this.lastComment < 5){
+                    newComment.css('top',  this.lastCommentHeight + 'em');
+                    this.lastCommentHeight++;
+                }else{
+                    this.lastCommentHeight = 1;
+                }
+            
+                newComment.animate( {'left' : (-330 - newComment.width()) + 'px'}, {duration : 5000, easing : 'linear'});
+                
+                //最後のコメントが入力された時間
+                this.lastComment = parseInt(new Date()/1000);
+            }
+        }
+        
+    </script>
+    <h1>視聴ページ</h1>
+    <h2>@chURI</h2>
+    <form action="@chURI/udpdate" method="post">
+        <input type="submit" value="comment"> 
+    </form>
+    
+    <h1 class="title">Scrolling Comment</h1>
+    <div style="position:relative;"><!-- ビデオとコメントが変なところ行かないように囲っておく -->
+        <div id="view">
+            <video src="http://nc07.ff-in.dwango.co.jp:8080/hls/test.m3u8" width="320" height="240"  onclick="this.play()" controls autoplay></video>
+            <div id="comment">
+            </div>
+        </div>
+    </div>
+
+<textarea style="position:relative;" id="que" cols="40" rows="20"></textarea>
+}
