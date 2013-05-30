@@ -1,28 +1,5 @@
 #view{
-<<<<<<< HEAD
-clip : rect(26px 384px 242px 0px);
-position: absolute;
-top: 0px;
-left: 0px;
-margin: 0;
-padding: 0;
-clip : rect(26px 384px 242px 0px);
-}
 
-#comment{
-position: absolute;
-top:30px;
-right:0px;
-color:white;
-font-family:sans-serif;
-text-shadow:1px 1px black;
-}
-
-.comment{
-position:absolute;
-left:0px;
-white-space:nowrap;
-=======
 position: relative;
 top: 0px;
 left: 0px;
@@ -54,7 +31,6 @@ text-shadow:1px 1px black;
 
 #commentForm{
 position:relative;
->>>>>>> refs/remotes/origin/commentTag
 }
 
 #que{

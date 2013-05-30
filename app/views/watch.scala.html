@@ -17,15 +17,7 @@
     	<input id="cmt" type="text" name="text" placeholder="comment" />
         <input type="submit" value="投稿"> 
     </form>
-    
-    <h1 class="title">Scrolling Comment</h1>
-    <div style="position:relative;"><!-- ビデオとコメントが変なところ行かないように囲っておく -->
-        <div id="view">
-            <video src="http://nc07.ff-in.dwango.co.jp:8080/hls/test.m3u8" width="320" height="240"  onclick="this.play()" controls autoplay></video>
-            <div id="comment">
-            </div>
-        </div>
-    </div>
+
     <iframe style="display:none" id="comet" src="./@channelURI/connectComet"></iframe>
     
     <!-- jQueryのソース -->
