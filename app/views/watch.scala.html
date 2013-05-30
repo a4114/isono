@@ -10,8 +10,10 @@
         <source src="movie.ogg" type="video/ogg">
         Your browser does not support the video tag.
         </video>
-        <form action="@chURI/update" method="post">
-            <input type="submit" value="comment"> 
-        </form>  
+        
+        <form id="commentForm">
+    	    <input style="height: 26px;width: 215px" id="comment" type="text" name="text" placeholder="comment" />
+            <input class="btn-def btn-warning" type="submit" value="Comment">
+        </form> 
     </div>     
 }

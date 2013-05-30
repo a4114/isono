@@ -2,28 +2,27 @@
 @main(title) {
    
     <div class="container-fluid">
-    　　　<h1>メーインページ</h1>
+    　　　<h1>メインページ</h1>
          <div class="row-fluid">
-             <div class="span1"><h5>logo</h5></div> 
              <div class="span10">
-                 <form class="navbar-search pull-left">
-                 <input type="text" class="search-query" placeholder="Search">           
+                 <form class="form-search">
+                 <div class="input-append">
+                 <input type="text" class="input-medium search-query" placeholder="Search">
+                 <button type="submit" class="btn"><i class="icon-search"></i></button>
+                 </div>
                  </form>
              </div>
-             <div class="span1">
-                  <a class="btn" href="#"><i class="icon-search"></i></a>
-             </div>
-         </div>
-     
-     <div><a class="btn" href="/newChannel">配信ページ</i></a></div>
-           
+         </div>               
          
         <ul class="nav nav-list">  
-            <li class="active"><a href="/watch/lv111111">番組名</a></li> 
+            <li><a href="/watch/lv111111">番組名</a></li> 
             <li class="divider"></li>  
-            <li class="active"><a href="/watch/lv999999">番組名</a></li>
+            <li><a href="/watch/lv999999">番組名</a></li>
             <li class="divider"></li> 
-            <li class="active"><a href="/watch/lv999999">番組名</a></li>            
+            <li><a href="/watch/lv999999">番組名</a></li>    
+            <li class="divider"></li>        
         </ul> 
+     
+      <div><a class="btn btn-warning" href="/newChannel">配信ページへ</i></a></div>          
    </div>
 }
