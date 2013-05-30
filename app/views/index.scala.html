@@ -1,7 +1,10 @@
-@(title: String)
+@(title: String,channelList: HashMap<String,Channel> )
 
 @main(title) {
     <h1>@title</h1>
-    <a href="/watch/lv999999">視聴ページ</a>
+    
+    @for(channel <- channelList.values()){
+    	<a href="/watch/@channel.getChannelURI()">@channel.getChannelName()</a>
+    }
     <a href="/newChannel">枠作成</a>
 }

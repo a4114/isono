@@ -29,6 +29,7 @@ public class Application extends Controller {
     private static int liveCount = 0;
     
     public static void AddUserToChannel(String channelURI,Comet comet,User user) throws Exception{
+       
         if(channelList.containsKey(channelURI)){
             channelList.get(channelURI).AddWatchingUser(comet, new User());
         }else{
@@ -39,7 +40,7 @@ public class Application extends Controller {
     
 	//メインページにアクセス
     public static Result index() {
-        return ok(index.render("メインページ"));
+        return ok(index.render("メインページ",channelList));
     }
     
     //視聴ページにアクセス
