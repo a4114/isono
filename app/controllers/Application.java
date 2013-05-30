@@ -1,14 +1,18 @@
 package controllers;
 
+
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 
 import org.codehaus.jackson.JsonNode;
 
+import models.Channel;
 import models.Comment;
 import models.User;
 
 import play.*;
+import play.api.libs.iteratee.internal;
 import play.libs.Comet;
 import play.libs.Json;
 import play.mvc.*;
@@ -19,6 +23,10 @@ import scala.concurrent.duration.Duration;
 
 public class Application extends Controller {
 
+    // <枠名><チャンネル>
+    private static HashMap<String,Channel> channelList = new HashMap<>();
+    private static int liveCount = 0;
+    
 	//メインページにアクセス
     public static Result index() {
         return ok(index.render("メインページ"));
@@ -40,10 +48,14 @@ public class Application extends Controller {
     
     //コメントを投稿
     public static Result postComment(String channelURI) {
+        
     	Map<String, String[]> requestBody = request().body().asFormUrlEncoded();
     	String context = requestBody.containsKey("text") ? requestBody.get("text")[0] : "";
     	Comment comment = new Comment("username", context, "tag", "channel");
-    	CometManager.sendComment(comment);
+    	
+    	//ここでComentCenterを使おう
+    	channelList.get(channelURI).BroadcastComment(comment);
+    	
     	return ok("");
     }
     
@@ -54,7 +66,10 @@ public class Application extends Controller {
 
     //枠を作成
     public static Result updateChannel() {
-    	String channelURI = "lv999999";
+    	String channelURI = "lv"+liveCount;
+    	
+    	channelList.put(channelURI, (new Channel("光り手チャンネル",channelURI, new User())));
+    	
     	//配信ページにリダイレクト
     	return redirect("/broadcast/" + channelURI);
     }
@@ -74,7 +89,7 @@ public class Application extends Controller {
         
     }  
     
-    //Comet管理クラス
+/*    //Comet管理クラス
     public static class CometManager{
     	//キー：Comet　値：ユーザ
     	final static public HashMap<Comet,User> sockets = new HashMap<Comet,User>();
@@ -92,5 +107,5 @@ public class Application extends Controller {
         	}
         }
     	
-    }
+    }*/
 }
