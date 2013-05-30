@@ -79,7 +79,7 @@ public class Channel implements Comparable<Channel>{
     @Override
     public int compareTo(Channel that) {
         // TODO 自動生成されたメソッド・スタブ
-        return this.getChannelName().compareTo(that.getChannelName());
+        return this.getChannelURI().compareTo(that.getChannelURI());
     }
 
     

@@ -1,35 +1,22 @@
 package controllers;
 
 
-import java.sql.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
-
-import org.codehaus.jackson.JsonNode;
-import org.jboss.netty.channel.ChannelPipeline;
-
-import com.sun.xml.internal.ws.policy.privateutil.PolicyUtils.Collections;
 
 import models.Channel;
 import models.CometAddvanced;
 import models.Comment;
 import models.User;
-
-import play.*;
-import play.api.libs.iteratee.internal;
 import play.libs.Comet;
-import play.libs.Json;
-import play.mvc.*;
-import akka.actor.*;
-import views.html.*;
-import static java.util.concurrent.TimeUnit.*;
-import scala.concurrent.duration.Duration;
+import play.mvc.Controller;
+import play.mvc.Result;
+import views.html.broadcast;
+import views.html.index;
+import views.html.newChannel;
+import views.html.watch;
 
 public class Application extends Controller {
 
@@ -49,7 +36,7 @@ public class Application extends Controller {
     
 	//メインページにアクセス
     public static Result index() {
-       Channel[] array= (Channel[])channelList.values().toArray();
+       Channel[] array= channelList.values().toArray(new Channel[0]);
        List<Channel> list = Arrays.asList(array);
        java.util.Collections.sort(list);
        
