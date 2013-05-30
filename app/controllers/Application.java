@@ -16,6 +16,7 @@ import play.mvc.Result;
 import twitter4j.Twitter;
 import twitter4j.TwitterException;
 import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
 import twitter4j.auth.RequestToken;
 import twitter4j.conf.ConfigurationBuilder;
 import views.html.broadcast;
@@ -100,28 +101,30 @@ public class Application extends Controller {
 
 
     public static Result twitterCallback(){
-        String token = request().queryString().get("oauth_token")[0];
-        session("oauth_token", token);
-        String token_secret = request().queryString().get("oauth_verifier")[0];
-        session("oauth_verifier", token_secret);
+        String oauth_token = request().queryString().get("oauth_token")[0];
+        session("oauth_token", oauth_token);
+        String oauth_verifier = request().queryString().get("oauth_verifier")[0];
+        session("oauth_verifier", oauth_verifier);
       
-        return internalServerError("oauth_token = " + token + "\n" + "oauth_verifier = " + token_secret);
+        return internalServerError("oauth_token = " + oauth_token + "\n" + "oauth_verifier = " + oauth_verifier);
     }
 
 
     public static Result checkLoginState(){
     	String value="";
-    	String token = session("oauth_token");
-    	String token_secret = session("oauth_verifier");
+    	String oauth_token = session("oauth_token");
+    	String oauth_verifier = session("oauth_verifier");
 
     	ConfigurationBuilder cb = new ConfigurationBuilder();
     	cb.setDebugEnabled(true)
     	  .setOAuthConsumerKey(CONSUMER_KEY)
     	  .setOAuthConsumerSecret(CONSUMER_SECRET)
-    	  .setOAuthAccessToken(token)
-    	  .setOAuthAccessTokenSecret(token_secret);
+    	  .setOAuthAccessToken(oauth_token)
+    	  .setOAuthAccessTokenSecret(oauth_verifier);
+    	
     	TwitterFactory tf = new TwitterFactory(cb.build());
     	Twitter twitter = tf.getInstance();
+    	
     	
     	String name="dummy";
     	try {
@@ -134,7 +137,7 @@ public class Application extends Controller {
 			e.printStackTrace();
 		}
     	
-    	value += "token = " + token + "\ntoken_secret = " + token_secret + "\nようこそ、 " + name + "さん☝( ◠‿◠ )☝";
+    	value += "oauth_token = " + oauth_token + "\noauth_secret = " + oauth_verifier + "\nようこそ、 " + name + "さん☝( ◠‿◠ )☝";
 		return internalServerError(value);
 //		return(internalServerError("☝( ◠‿◠ )☝ログインできなかったよ"));    		    	
 //    	return internalServerError("☝( ◠‿◠ )☝oauth_token = " + token + "\n" + "oauth_verifier = " + token_secret);    	
