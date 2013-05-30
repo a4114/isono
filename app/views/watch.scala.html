@@ -62,21 +62,26 @@
                 //新しいコメントを追加，流す．
                 //
                 //新しく生成したコメントをキャッシュしておく
-                newComment = $('<span class="comment">' + content  +'</span>')
+                this.newComment = $('<span class="comment">' + content  +'</span>')
                                 .appendTo(this.commentBox);
-                $("body").append('<div>'+ newComment.width() +'</div>')
-                if(parseInt(new Date() / 1000) - this.lastComment < 5){
-                    newComment.css('top',  this.lastCommentHeight + 'em');
-                    this.lastCommentHeight++;
+                this.newComment.css('top',  Math.random() * 12 + 'em');
+                /*if(parseInt(new Date() / 1000) - this.lastComment < 5){
+                    if (this.lastComment < 8){
+                        this.newComment.css('top',  this.lastCommentHeight + 'em');
+                        this.lastCommentHeight++;
+                    }else{
+                        this.newComment.css('top',  Math.random() * 12 + 'em');
+                    }
                 }else{
-                    this.lastCommentHeight = 1;
-                }
+                        this.lastCommentHeight = 1;
+                }*/
                 
-                newComment.css("right","-320px");
-                newComment.animate( {'right' :  newComment.width() + 'px'},
+                this.newComment.css("right", -this.newComment.width() + 'px');
+                $("body").append(this.newComment.text() + '<br>');
+                this.newComment.animate( {'right' :  320 + 'px'},
                                     {duration : 5000,
                                     easing : 'linear',
-                                    complete : function(){ newComment.remove();} 
+                                    complete : function(){ this.newComment.remove();} 
                                     } );
                 
                 //最後のコメントが入力された時間
