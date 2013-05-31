@@ -40,5 +40,7 @@ public class ApplicationTest {
       //  assertThat(contentAsString(html)).contains("Your new application is ready.");
     }
   
-   
+    public void videoFileURL() {
+        
+      }
 }
