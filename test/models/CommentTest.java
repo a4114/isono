@@ -17,8 +17,10 @@ public class CommentTest {
         Comment comment = new Comment("testName", "testContext", "test tag", "fujimotoChannel");
         assertThat(comment.getUserName()).isEqualTo("testName");
         assertThat(comment.getContext()).isEqualTo("testContext");
-        assertThat(comment.getTagString()).isEqualTo("test tag");
+        assertThat(comment.getTag().getTagString()).isEqualTo("test tag");
         assertThat(comment.getChannelURI()).isEqualTo("fujimotoChannel");
+        
+        System.out.println(comment.toJson());
     }
     
     @Test
@@ -77,6 +79,7 @@ public class CommentTest {
        CommentCenter.AddComment(comment);
        assertThat(set.size()).isEqualTo(2);
     }
+    
     
     @Before
     public void Reset(){

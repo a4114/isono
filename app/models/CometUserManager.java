@@ -6,7 +6,6 @@ import org.codehaus.jackson.JsonNode;
 
 import play.libs.Comet;
 import play.libs.F.Callback0;
-import play.libs.Json;
 import akka.actor.UntypedActor;
 
 
@@ -35,9 +34,9 @@ public class CometUserManager extends UntypedActor {
         
         //コメントが来た
         if(arg0 instanceof Comment){
-            JsonNode jcomment = Json.toJson((Comment)arg0);
+            JsonNode jnode=((Comment)arg0).toJson();
             for(Comet c : cometList){
-                c.sendMessage(jcomment);
+                c.sendMessage(jnode);
             }
         }
     }

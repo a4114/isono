@@ -105,7 +105,6 @@ public class Application extends Controller {
    
     
     public static void UpdateComment(Comment comment){
-        
     }  
     
 /*    //Comet管理クラス
