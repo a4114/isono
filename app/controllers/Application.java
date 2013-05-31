@@ -5,6 +5,8 @@ import java.util.Map;
 
 import models.Comment;
 import models.User;
+import models.TwitterManager;
+
 
 import org.codehaus.jackson.JsonNode;
 
@@ -24,10 +26,9 @@ import views.html.index;
 import views.html.newChannel;
 import views.html.watch;
 
+
+
 public class Application extends Controller {
-    static private final String CONSUMER_KEY = "tIRpAmBs6UtryMFGPL4wg";
-    static private final String CONSUMER_SECRET = "3Uak8Nk6euyBzxRsitDZTwrnSTZcZKTZlHe3WGwXmk";
-    static private RequestToken reqToken;
     
 	//メインページにアクセス
     public static Result index() {
@@ -82,24 +83,16 @@ public class Application extends Controller {
    
 
     public static Result login(){
-        TwitterFactory twitterFactory = new TwitterFactory();
-        Twitter twitter = twitterFactory.getInstance();
-        twitter.setOAuthConsumer(CONSUMER_KEY,CONSUMER_SECRET);
-
         try {
-            reqToken = twitter.getOAuthRequestToken();
-
-            Cache.set("RequestToken", reqToken);
-            Cache.set("Twitter", twitter);
-            return redirect(reqToken.getAuthorizationURL());
-        } catch (TwitterException e) {
+            String url = TwitterManager.getLoginUrl();
+            return redirect(url);
+        } catch (Exception e) {
             e.printStackTrace();
             return internalServerError("Twitter4jの例外");
         }
     }
     
-//    public static Result checkLoginState
-
+//  public static Result checkLoginState
 
     public static Result twitterCallback(){
         String oauth_token = request().queryString().get("oauth_token")[0];
@@ -123,7 +116,10 @@ public class Application extends Controller {
 
     public static Result checkLoginState(){
         Twitter twitter = (Twitter)Cache.get("Twitter");
-        
+        if(twitter==null){
+            return redirect(controllers.routes.Application.login());         	
+        	
+        }
     	
     	String name="dummy";
     	try {
