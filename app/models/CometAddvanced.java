@@ -1,8 +1,7 @@
 package models;
 
-import controllers.Application;
 import play.libs.Comet;
-import views.html.newChannel;
+import controllers.Application;
 
 //Comet自身にUser情報をもたせる
 public class CometAddvanced extends Comet {
