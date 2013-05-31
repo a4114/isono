@@ -8,6 +8,7 @@ import com.sun.media.jai.opimage.ClampCRIF;
 
 import javassist.expr.Instanceof;
 
+import play.api.libs.iteratee.internal;
 import play.libs.Comet;
 import play.libs.F.Callback0;
 import play.libs.Json;
@@ -52,4 +53,6 @@ public class CometUserManager extends UntypedActor {
         }
     }
 
+    public ArrayList<Comet> getCometList(){return cometList;}
+    
 }
