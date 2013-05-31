@@ -57,6 +57,17 @@
             commentBox : null,
             lastComment : parseInt(new Date()/1000),
             lastCommentHeight:1,
+            
+            nantoka : function(commentSet){
+                this.naiyou;
+                ....
+                if ue!=notue{
+                    kommento nagasu
+                }else{
+                    ueniyyatte 5byougonikesu;
+                }
+                
+            }
             shootComment : function(content){
                 //
                 //コメントを追加するDOMを探す．1回だけ
@@ -86,11 +97,32 @@
                 this.newComment.animate( {'right' :  320 + 'px'},
                                     {duration : 5000,
                                     easing : 'linear',
-                                    complete : function(){ this.newComment.remove();} 
+                                    complete : function(){  } 
                                     } );
                 
                 //最後のコメントが入力された時間
                 this.lastComment = parseInt(new Date()/1000);
+            }
+            
+            
+            function scroll(comment, color, size){
+                // デフォルト引数
+                if(typeof color === 'undefined') color = white;
+                if(typeof size === 'undefined') size = 1em;
+                
+                
+                this.newComment = $('<span class="comment">' + content  +'</span>')
+                                .appendTo(this.commentBox);
+                this.newComment.css('top',  Math.random() * 12 + 'em');
+                
+                // アニメーション開始
+                this.newComment.css("right", -this.newComment.width() + 'px');
+                $("body").append(this.newComment.text() + '<br>');
+                this.newComment.animate( {'right' :  320 + 'px'},
+                                    {duration : 5000,
+                                    easing : 'linear',
+                                    complete : function(){  } 
+                                    } );
             }
         }
  	
