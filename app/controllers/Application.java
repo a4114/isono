@@ -10,6 +10,7 @@ import models.Channel;
 import models.CometAddvanced;
 import models.Comment;
 import models.User;
+import play.cache.Cache;
 import play.libs.Comet;
 import play.libs.F.Callback0;
 import play.mvc.Controller;
@@ -107,7 +108,6 @@ public class Application extends Controller {
    
     
     public static void UpdateComment(Comment comment){
-        
     }  
     
 /*    //Comet管理クラス
