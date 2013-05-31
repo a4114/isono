@@ -1,10 +1,27 @@
 @(title: String,channelList: List[Channel] )
 
 @main(title) {
-    <h1>@title</h1>
-    
-    @for(channel <- channelList){
-    	<a href="/watch/@channel.getChannelURI()">@channel.getChannelName() (@channel.getChannelURI())</a><br>
-    }
-    <a href="/newChannel">枠作成</a>
+    <div class="container-fluid">
+    　　　<h1>メインページ</h1>
+         <div class="row-fluid">
+             <div class="span10">
+                 <form class="form-search">
+                 <div class="input-append">
+                 <input type="text" class="input-medium search-query" placeholder="Search">
+                 <button type="submit" class="btn"><i class="icon-search"></i></button>
+                 </div>
+                 </form>
+             </div>
+         </div>               
+         
+        <ul class="nav nav-list">  
+            @for(channel <- channelList){
+                <li><a href="/watch/@channel.getChannelURI()">@channel.getChannelName() (@channel.getChannelURI())</a></li>
+                <div id="@channel.getChannelName()" class="collapse">description</div>
+                <li class="divider"></li> 
+            }
+        </ul> 
+     
+      <div><a class="btn btn-warning" href="/newChannel">配信ページへ</i></a></div>          
+   </div>
 }

@@ -7,15 +7,15 @@
     </script>
     <h1>視聴ページ</h1>
     <h2>@channelURI</h2>
-    <div id="view">
+    <div class="container-fluid" id="view">
         <video width="320" height="240" onclick="this.play();" controls autoplay>
-            <source src="http://nc07.ff-in.dwango.co.jp:8080/hls/test.m3u8"></source>
+            <source src="http://nc07.ff-in.dwango.co.jp:8080/hls/@(channelURI).m3u8"></source>
         </video>
         <div id="comment"></div>
     </div>
     <form id="commentForm" action="./@channelURI/update" method="POST">
     	<input id="cmt" type="text" name="text" placeholder="comment" />
-        <input type="submit" value="投稿"> 
+        <input class="btn-def btn-warning" type="submit" value="投稿"> 
     </form>
 
     <iframe style="display:none" id="comet" src="./@channelURI/connectComet"></iframe>
@@ -57,6 +57,17 @@
             commentBox : null,
             lastComment : parseInt(new Date()/1000),
             lastCommentHeight:1,
+            /*
+            nantoka : function(commentSet){
+                this.naiyou;
+                ....
+                if ue!=notue{
+                    kommento nagasu
+                }else{
+                    ueniyyatte 5byougonikesu;
+                }
+                
+            }*/
             shootComment : function(content){
                 //
                 //コメントを追加するDOMを探す．1回だけ
@@ -86,12 +97,33 @@
                 this.newComment.animate( {'right' :  320 + 'px'},
                                     {duration : 5000,
                                     easing : 'linear',
-                                    complete : function(){ this.newComment.remove();} 
+                                    complete : function(){  } 
                                     } );
                 
                 //最後のコメントが入力された時間
                 this.lastComment = parseInt(new Date()/1000);
             }
+            
+            /*
+            function scroll(comment, color, size){
+                // デフォルト引数
+                if(typeof color === 'undefined') color = white;
+                if(typeof size === 'undefined') size = 1em;
+                
+                
+                this.newComment = $('<span class="comment">' + content  +'</span>')
+                                .appendTo(this.commentBox);
+                this.newComment.css('top',  Math.random() * 12 + 'em');
+                
+                // アニメーション開始
+                this.newComment.css("right", -this.newComment.width() + 'px');
+                $("body").append(this.newComment.text() + '<br>');
+                this.newComment.animate( {'right' :  320 + 'px'},
+                                    {duration : 5000,
+                                    easing : 'linear',
+                                    complete : function(){  } 
+                                    } );
+            }*/
         }
  	
     </script>
