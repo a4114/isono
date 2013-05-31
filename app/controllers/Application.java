@@ -144,29 +144,29 @@ public class Application extends Controller {
             return redirect("/login");
         }
 
-        return redirect("/index");
+        return redirect("/");
     }
 
     public static Result checkLoginState() {
-        Twitter twitter = (Twitter) Cache.get("Twitter");
-        if (twitter == null) {
+  
+        if(IsLogined()){
+            return redirect("/");
+        }else{
             return redirect("/login");
-
         }
-
-        String name = "dummy";
-        try {
-            name = twitter.getScreenName();
-        } catch (IllegalStateException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (TwitterException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-
-        return internalServerError(name);
+        
     }
+    
+    private static boolean IsLogined(){
+        
+        if(!session().containsKey("TwitterID")){
+            return false;
+        }
+        
+        return User.userList.containsKey(Long.parseLong( session().get("TwitterID" )));
+        
+    }
+    
 
     public static void UpdateComment(Comment comment) {
     }
