@@ -58,9 +58,7 @@ public class Application extends Controller {
     public static Result connectComet(String channelURI) {
         
         CometAddvanced ca =new CometAddvanced("parent.getComment",channelURI,new User());
-        
-        
-        
+
         //CometAddvancedを追加　初期化が違うくらいで後は一緒
     	return ok(ca);
     }
