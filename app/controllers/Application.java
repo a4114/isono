@@ -6,19 +6,39 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+
 import models.Channel;
 import models.CometAddvanced;
 import models.Comment;
 import models.User;
 import play.mvc.Controller;
 import play.mvc.Result;
+import models.Comment;
+import models.User;
+import models.TwitterManager;
+
+
+import org.codehaus.jackson.JsonNode;
+
+import play.cache.Cache;
+import play.libs.Comet;
+import play.libs.Json;
+import play.mvc.Controller;
+import play.mvc.Result;
+import twitter4j.Twitter;
+import twitter4j.TwitterException;
+import twitter4j.TwitterFactory;
+import twitter4j.auth.AccessToken;
+import twitter4j.auth.RequestToken;
+import twitter4j.conf.ConfigurationBuilder;
+
 import views.html.broadcast;
 import views.html.index;
 import views.html.newChannel;
 import views.html.watch;
 
 public class Application extends Controller {
-
+    
     // <枠名><チャンネル>
     private static HashMap<String,Channel> channelList = new HashMap<>();
     private static int liveCount = 0;
@@ -32,7 +52,7 @@ public class Application extends Controller {
         }
     }
     
-    
+
 	//メインページにアクセス
     public static Result index() {
        Channel[] array= channelList.values().toArray(new Channel[0]);
@@ -103,6 +123,60 @@ public class Application extends Controller {
         return redirect("/broadcast/" + channelURI);
     }
    
+   
+
+    public static Result login(){
+        try {
+            String url = TwitterManager.getLoginUrl();
+            return redirect(url);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return internalServerError("Twitter4jの例外");
+        }
+    }
+    
+//  public static Result checkLoginState
+
+    public static Result twitterCallback(){
+        String oauth_token = request().queryString().get("oauth_token")[0];
+        session("oauth_token", oauth_token);
+        String oauth_verifier = request().queryString().get("oauth_verifier")[0];
+        session("oauth_verifier", oauth_verifier);
+      
+        Twitter twitter = (Twitter)Cache.get("Twitter");
+        
+        try{
+            AccessToken accessToken= twitter.getOAuthAccessToken(oauth_verifier);
+            twitter.setOAuthAccessToken(accessToken);
+            System.out.println(twitter.getScreenName());
+        }catch(TwitterException e){
+            e.printStackTrace();
+        }
+        
+        return redirect(controllers.routes.Application.checkLoginState()); 
+    }
+
+
+    public static Result checkLoginState(){
+        Twitter twitter = (Twitter)Cache.get("Twitter");
+        if(twitter==null){
+            return redirect(controllers.routes.Application.login());         	
+        	
+        }
+    	
+    	String name="dummy";
+    	try {
+    		name = twitter.getScreenName();
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (TwitterException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+		return internalServerError(name);
+    }
     
     public static void UpdateComment(Comment comment){
     }  

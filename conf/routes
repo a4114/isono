@@ -28,5 +28,8 @@ POST    /broadcast/:channelURI/update    controllers.Application.updateOwnerComm
 
 # Map static resources from the /public folder to the /assets URL path
 
-GET     /assets/*file                    controllers.Assets.at(path="/public", file)
 
+GET     /assets/*file                    controllers.Assets.at(path="/public", file)
+GET		/login						controllers.Application.login()
+GET		/checkloginstate			controllers.Application.checkLoginState()
+GET		/twitter/callback			controllers.Application.twitterCallback()
