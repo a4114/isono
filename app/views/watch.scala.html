@@ -1,21 +1,22 @@
 @(channelURI: String)
 
 @main("視聴ページ") {
+<div class="container-fluid">
     <script type="text/javascript">
         
 
     </script>
     <h1>視聴ページ</h1>
     <h2>@channelURI</h2>
-    <div class="container-fluid" id="view">
-        <video width="320" height="240" onclick="this.play();" controls autoplay>
+    <div id="view">
+        <video width="280" height="210" onclick="this.play();" controls autoplay>
             <source src="http://nc07.ff-in.dwango.co.jp:8080/hls/@(channelURI).m3u8"></source>
         </video>
         <div id="comment"></div>
     </div>
-    <form id="commentForm" action="./@channelURI/update" method="POST">
+    <form class="input-append" id="commentForm" action="./@channelURI/update" method="POST">
     	<input id="cmt" type="text" name="text" placeholder="comment" />
-        <input class="btn-def btn-warning" type="submit" value="投稿"> 
+        <input class="btn-warning" type="submit" value="投稿"> 
     </form>
 
     <iframe style="display:none" id="comet" src="./@channelURI/connectComet"></iframe>
@@ -127,4 +128,5 @@
         }
  	
     </script>
+</div>
 }

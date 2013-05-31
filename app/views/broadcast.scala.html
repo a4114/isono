@@ -9,13 +9,13 @@
         <source src="movie.mp4" type="video/mp4">
         <source src="movie.ogg" type="video/ogg">
         Your browser does not support the video tag.
-    </video>
+    </video></br>
     
     <!-- 配信者コメント -->
-    <form id="commentForm">
-        <input id="commentOfBroadcaster" type="text" name="text" placeholder="comment" />
-        <input class="btn-warning" type="submit" value="Comment">
-    </form>
     
+    <form class="input-append" id="commentForm" action="./broadcast/@chURI" method="POST">
+    	<input id="commentOfBroadcaster" type="text" name="text" placeholder="comment"/>
+        <input class="btn-warning" type="submit" value="投稿"> 
+    </form>
 <div>
 }

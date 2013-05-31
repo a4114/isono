@@ -1,4 +1,5 @@
 @main("枠作成") {
+    <div class="container-fluid">
     <h1>枠作成</h1>
     <form action="newChannel/update" method="post">        
         
@@ -9,15 +10,19 @@
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="1">
-                <p>設定設定設定</p>
+               <input > 動画接続先URI </input><br>
+                <btn>配信開始</btn><br>
+                <btn>停止</btn>
             </div>
             <div class="tab-pane" id="2">
-                <p>磯野</p>
+                <btn>イソノ無効にする</btn>
             </div>
         </div>
     </div>
     
+    <li class="divider"></li> 
     <input type="submit" class="btn btn-warning" value="create"> 
     
     </form>
+    </div>
 }
