@@ -4,18 +4,18 @@ package models;
 public class CommentTag {
     
     public enum TagColor{
-        Red,Gree,Blue,Pink,Orange,White,Black,Yellow,Cyan,Purple
+        Red,Green,Blue,Pink,Orange,White,Black,Yellow,Cyan,Purple
     }
     public enum TagSize{
-        Big,Normal,Small
+        large,medium,small
     }
     public enum TagPosition{
-        Ue,Shita,Normal
+        ue,shita,normal
     }
     
     private  TagColor tagColor; 
-    private  TagSize tagSize = TagSize.Normal;
-    private  TagPosition tagPosition = TagPosition.Normal;
+    private  TagSize tagSize = TagSize.medium;
+    private  TagPosition tagPosition = TagPosition.normal;
     private  String tagString;
     
     public CommentTag(TagColor tagColor,TagSize tagSize,TagPosition tagPosition) {
@@ -31,11 +31,11 @@ public class CommentTag {
     }
   
     private void setTagSize(TagSize size){
-        if(this.tagSize==TagSize.Normal){this.tagSize = size;}
+        if(this.tagSize==TagSize.medium){this.tagSize = size;}
     }
     
     private void setTagPosition(TagPosition pos){
-        if(this.tagPosition == TagPosition.Normal){this.tagPosition=pos;}
+        if(this.tagPosition == TagPosition.normal){this.tagPosition=pos;}
     }
 
     //tagの生文字列を元に各要素を初期化
@@ -67,7 +67,7 @@ public class CommentTag {
                 setTagColor(TagColor.Red);
                 break;
             case "green":
-                setTagColor(TagColor.Gree);
+                setTagColor(TagColor.Green);
                 break;
             case "cyan":
                 setTagColor(TagColor.Cyan);
@@ -77,22 +77,24 @@ public class CommentTag {
                 break;
                 
             case "small":
-                setTagSize(TagSize.Small);
+                setTagSize(TagSize.small);
                 break;
-            case "big":
-                setTagSize(TagSize.Big);
+            case "large":
+                setTagSize(TagSize.large);
                 break;
             
             case "ue":
-                setTagPosition(TagPosition.Ue);
+                setTagPosition(TagPosition.ue);
                 break;
                 
             case "shita":
-                setTagPosition(TagPosition.Shita);
+                setTagPosition(TagPosition.shita);
                 break;
               
             }       
         }
+        
+        if(this.tagColor==null){this.tagColor=TagColor.White;}
         
     }
     

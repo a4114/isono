@@ -20,6 +20,7 @@ public class CommentTest {
         assertThat(comment.getTag().getTagString()).isEqualTo("test tag");
         assertThat(comment.getChannelURI()).isEqualTo("fujimotoChannel");
         
+        System.out.println(comment.toJson());
     }
     
     @Test
