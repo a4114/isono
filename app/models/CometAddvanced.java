@@ -9,6 +9,10 @@ public class CometAddvanced extends Comet {
 
     private final String channelURI;
     private final User user;
+
+    public User getUser() {
+        return getUser();
+    }
     
     public CometAddvanced(String callbackMethod,String channelURI,User user) {
         super(callbackMethod);
@@ -19,12 +23,11 @@ public class CometAddvanced extends Comet {
     @Override
     public void onConnected() {
         try{
-            Application.AddUserToChannel(channelURI, this, user);
+            Application.AddUserToChannel(channelURI, this);
         }catch(Exception e){
             System.err.println(e.getMessage());
             e.printStackTrace();
         }
     }
 
-    
 }

@@ -11,6 +11,7 @@ import models.CometAddvanced;
 import models.Comment;
 import models.User;
 import play.libs.Comet;
+import play.libs.F.Callback0;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.broadcast;
@@ -24,10 +25,10 @@ public class Application extends Controller {
     private static HashMap<String,Channel> channelList = new HashMap<>();
     private static int liveCount = 0;
     
-    public static void AddUserToChannel(String channelURI,Comet comet,User user) throws Exception{
+    public static void AddUserToChannel(String channelURI,CometAddvanced cometAddvanced) throws Exception{
        
         if(channelList.containsKey(channelURI)){
-            channelList.get(channelURI).AddWatchingUser(comet, new User());
+            channelList.get(channelURI).AddWatchingUser(cometAddvanced);
         }else{
             throw new Exception("不正な枠URIです");
         }
@@ -56,8 +57,10 @@ public class Application extends Controller {
     //コメットソケットを作成
     public static Result connectComet(String channelURI) {
         
+        CometAddvanced ca =new CometAddvanced("parent.getComment",channelURI,new User());
+
         //CometAddvancedを追加　初期化が違うくらいで後は一緒
-    	return ok(new CometAddvanced("parent.getComment",channelURI,new User()));
+    	return ok(ca);
     }
     
     //コメントを投稿

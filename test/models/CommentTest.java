@@ -2,15 +2,12 @@ package models;
 
 import static org.fest.assertions.Assertions.assertThat;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
 import org.junit.Before;
 import org.junit.Test;
-import org.specs2.internal.scalaz.std.java.util.map;
 
 public class CommentTest {
 
