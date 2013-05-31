@@ -143,7 +143,6 @@ public class Application extends Controller {
             e.printStackTrace();
             return redirect("/login");
         }
-
         return redirect("/");
     }
 
@@ -167,6 +166,7 @@ public class Application extends Controller {
         
     }
     
+
 
     public static void UpdateComment(Comment comment) {
     }
