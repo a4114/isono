@@ -14,6 +14,7 @@ import play.data.validation.Constraints.RequiredValidator;
 import play.i18n.Lang;
 import play.libs.F;
 import play.libs.F.*;
+import views.html.watch;
 
 import static play.test.Helpers.*;
 import static org.fest.assertions.Assertions.*;
@@ -39,8 +40,20 @@ public class ApplicationTest {
       //  assertThat(contentType(html)).isEqualTo("text/html");
       //  assertThat(contentAsString(html)).contains("Your new application is ready.");
     }
-  
-    public void videoFileURL() {
-        
-      }
+    
+    @Test
+    public void broadcastRTMPStreamName() {
+        String channelURI = "lv1234";
+        Result result = controllers.Application.broadcast(channelURI);
+        assertThat(contentAsString(result)).contains("Stream：" + channelURI);
+    }
+    
+    @Test
+    public void watchVideoURL() {
+        String channelURI = "lv1234";
+        Content html = views.html.watch.render(channelURI);
+        assertThat(contentAsString(html)).contains("http://nc07.ff-in.dwango.co.jp:8080/hls/" + channelURI + ".m3u8");
+    }
+    
+    
 }
