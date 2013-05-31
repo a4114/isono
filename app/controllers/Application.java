@@ -110,7 +110,6 @@ public class Application extends Controller {
         Twitter twitter = (Twitter)Cache.get("Twitter");
         
         try{
-           
             AccessToken accessToken= twitter.getOAuthAccessToken(oauth_verifier);
             twitter.setOAuthAccessToken(accessToken);
             System.out.println(twitter.getScreenName());
@@ -118,27 +117,13 @@ public class Application extends Controller {
             e.printStackTrace();
         }
         
-        
-        
-        return internalServerError();
+        return redirect(controllers.routes.Application.checkLoginState()); 
     }
 
 
     public static Result checkLoginState(){
-    	String value="";
-    	String oauth_token = session("oauth_token");
-    	String oauth_verifier = session("oauth_verifier");
-
-    	ConfigurationBuilder cb = new ConfigurationBuilder();
-    	cb.setDebugEnabled(true)
-    	  .setOAuthConsumerKey(CONSUMER_KEY)
-    	  .setOAuthConsumerSecret(CONSUMER_SECRET)
-    	  .setOAuthAccessToken(oauth_token)
-    	  .setOAuthAccessTokenSecret(oauth_verifier);
-    	
-    	TwitterFactory tf = new TwitterFactory(cb.build());
-    	Twitter twitter = tf.getInstance();
-    	
+        Twitter twitter = (Twitter)Cache.get("Twitter");
+        
     	
     	String name="dummy";
     	try {
@@ -151,12 +136,8 @@ public class Application extends Controller {
 			e.printStackTrace();
 		}
     	
-    	value += "oauth_token = " + oauth_token + "\noauth_secret = " + oauth_verifier + "\nようこそ、 " + name + "さん☝( ◠‿◠ )☝";
-		return internalServerError(value);
-//		return(internalServerError("☝( ◠‿◠ )☝ログインできなかったよ"));    		    	
-//    	return internalServerError("☝( ◠‿◠ )☝oauth_token = " + token + "\n" + "oauth_verifier = " + token_secret);    	
+		return internalServerError(name);
     }
-    
     
     public static void UpdateComment(Comment comment){
         
