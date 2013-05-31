@@ -10,8 +10,6 @@ import models.Channel;
 import models.CometAddvanced;
 import models.Comment;
 import models.User;
-import play.libs.Comet;
-import play.libs.F.Callback0;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.broadcast;

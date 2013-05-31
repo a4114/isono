@@ -4,20 +4,9 @@ import java.util.ArrayList;
 
 import org.codehaus.jackson.JsonNode;
 
-import com.sun.media.jai.opimage.ClampCRIF;
-
-import javassist.expr.Instanceof;
-
-import play.api.libs.iteratee.internal;
 import play.libs.Comet;
 import play.libs.F.Callback0;
 import play.libs.Json;
-import scala.reflect.internal.Trees.This;
-import views.html.newChannel;
-
-import akka.actor.Actor;
-import akka.actor.ActorRef;
-import akka.actor.ActorSystem;
 import akka.actor.UntypedActor;
 
 

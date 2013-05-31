@@ -1,13 +1,10 @@
 package models;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
 import controllers.Application;
-
-import scala.annotation.meta.getter;
 
 
 public final class CommentCenter {
