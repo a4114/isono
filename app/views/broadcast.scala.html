@@ -3,9 +3,9 @@
 @main("配信ページ") {
 <div class="container-fluid">   
     
-    <h1>配信ページ</h1>
+    <h1>@chURI配信中...</h1>
      
-    <video width="480" height="360" controls>
+    <video width="280" height="210" controls>
         <source src="movie.mp4" type="video/mp4">
         <source src="movie.ogg" type="video/ogg">
         Your browser does not support the video tag.
@@ -14,8 +14,8 @@
     <!-- 配信者コメント -->
     
     <form class="input-append" id="commentForm" action="./broadcast/@chURI" method="POST">
-    	<input id="commentOfBroadcaster" type="text" name="text" placeholder="comment"/>
-        <input class="btn-warning" type="submit" value="投稿"> 
+    	<input id="broCmt" type="text" name="text" placeholder="Enter comment"/>
+        <button class="btn btn-warning" type="submit"><i class="icon-comment icon-white"></i> 投稿</button>
     </form>
 <div>
 }

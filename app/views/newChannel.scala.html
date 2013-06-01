@@ -1,27 +1,62 @@
 @main("枠作成") {
     <div class="container-fluid">
     <h1>枠作成</h1>
-    <form action="newChannel/update" method="post">        
-        
+    <form action="newChannel/update" method="post">  
     <div class="tabbable">
         <ul class="nav nav-tabs">
-            <li class="active"><a href="#1" data-toggle="tab">設定</a></li>
-            <li><a href="#2" data-toggle="tab">イソノ</a></li>
+            <li class="active"><a href="#1" data-toggle="tab">基本設定</a></li>
+            <li><a href="#2" data-toggle="tab">ISONO設定</a></li>
         </ul>
+        
         <div class="tab-content">
-            <div class="tab-pane active" id="1">
-               <input > 動画接続先URI </input><br>
-                <btn>配信開始</btn><br>
-                <btn>停止</btn>
+
+            <!--general set-->
+            <div class="tab-pane active" id="1">                
+                <!-- userID-->
+                <label class="control-label">User ID</label>
+                <div class="controls">
+                    <div class="input-prepend">
+                        <span class="add-on">ID</span>
+                        <input class="span2" placeholder="Enter your ID" id="broID" type="text">
+                    </div>
+                </div>         
+                
+                <!--Channelname-->
+                <label class="control-label">Live Name</label>
+                <div class="controls">
+                    <div class="input-prepend">
+                        <span class="add-on">name</span>
+                        <input class="span2" placeholder="Enter Live name" id="liveURI" type="text">
+                    </div>
+                </div>
+
+                <!--URI-->
+                <label class="control-label">Live URI</label>
+                <div class="controls">
+                    <div class="input-prepend">
+                        <span class="add-on">URI</span>
+                        <input class="span2" placeholder="Enter URI" id="liveURI" type="text">
+                    </div>
+                </div>
+        
+                <!-- Description -->
+                <label class="control-label">Description</label>
+                <div class="controls">
+                    <div class="textarea">
+                    <textarea type="txt" placeholder="Brief introduction" id="Desc"></textarea>
+                    </div>
+                </div>
             </div>
+           　
+　　　　　　　 <!--isono set-->
             <div class="tab-pane" id="2">
-                <btn>イソノ無効にする</btn>
-            </div>
+                イソノイソノイソノ
+            </div><br>
+
         </div>
-    </div>
+    </div>   
     
-    <li class="divider"></li> 
-    <input type="submit" class="btn btn-warning" value="create"> 
+    <button class="btn btn-warning" type="submit"><i class="icon-facetime-video icon-white"></i> 配信開始</button>
     
     </form>
     </div>
