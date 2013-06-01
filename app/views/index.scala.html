@@ -3,7 +3,7 @@
 @main(title) {
     <div class="container-fluid">
         <h1>grepHikari</h1><br>        
-        <form> <button type="submit" class="btn">Login with Titter Account</button></form>
+        <form> <button type="submit" class="btn-primary btn">Login with Twitter Account</button></form>
        
         <form class="form-search">
         <div class="input-append">
@@ -18,7 +18,7 @@
                 <div class="accordion-group">
                     <div class="accordion-heading">
                         <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#@channel.getChannelName()">
-                        紹介</a>
+                        <i class="icon-chevron-down"></i></a>
                     </div>
                     <div id="@channel.getChannelName()" class="accordion-body collapse">
                         <div class="accordion-inner">this is my channel</div>
@@ -28,7 +28,7 @@
             }
         </ul> 
         <br>
-        <div><a class="btn btn-warning" href="/newChannel">配信ページへ</i></a></div>          
+        <div><a class="btn btn-warning" href="/newChannel">配信ページへ  <i class="icon-arrow-right icon-white"></i></a></div>          
     </div>
    
 }
