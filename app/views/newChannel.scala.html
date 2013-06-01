@@ -1,63 +1,67 @@
 @main("枠作成") {
-    <div class="container-fluid">
-    <h1>枠作成</h1>
-    <form action="newChannel/update" method="post">  
-    <div class="tabbable">
-        <ul class="nav nav-tabs">
-            <li class="active"><a href="#1" data-toggle="tab">基本設定</a></li>
-            <li><a href="#2" data-toggle="tab">ISONO設定</a></li>
-        </ul>
-        
-        <div class="tab-content">
+<div class="container-fluid">
+	<h1>枠作成</h1>
+	<form action="newChannel/update" method="post">
+		<div class="tabbable">
+			<ul class="nav nav-tabs">
+				<li class="active">
+					<a href="#1" data-toggle="tab">基本設定</a>
+				</li>
+				<li>
+					<a href="#2" data-toggle="tab">ISONO設定</a>
+				</li>
+			</ul>
 
-            <!--general set-->
-            <div class="tab-pane active" id="1">                
-                <!-- userID-->
-                <label class="control-label">User ID</label>
-                <div class="controls">
-                    <div class="input-prepend">
-                        <span class="add-on">ID</span>
-                        <input class="span2" placeholder="Enter your ID" id="broID" type="text">
-                    </div>
-                </div>         
-                
-                <!--Channelname-->
-                <label class="control-label">Live Name</label>
-                <div class="controls">
-                    <div class="input-prepend">
-                        <span class="add-on">name</span>
-                        <input class="span2" placeholder="Enter Live name" id="liveURI" type="text">
-                    </div>
-                </div>
+			<div class="tab-content">
+				<!--general set-->
+				<div class="tab-pane active" id="1">
+					<!-- userID-->
+					<label class="control-label">User ID</label>
+					<div class="controls">
+						<div class="input-prepend">
+							<span class="add-on"><i class="icon-user"></i></span>
+							<input style="width:210px" placeholder="Enter your ID" id="broID" type="text">
+						</div>
+					</div>
 
-                <!--URI-->
-                <label class="control-label">Live URI</label>
-                <div class="controls">
-                    <div class="input-prepend">
-                        <span class="add-on">URI</span>
-                        <input class="span2" placeholder="Enter URI" id="liveURI" type="text">
-                    </div>
-                </div>
-        
-                <!-- Description -->
-                <label class="control-label">Description</label>
-                <div class="controls">
-                    <div class="textarea">
-                    <textarea type="txt" placeholder="Brief introduction" id="Desc"></textarea>
-                    </div>
-                </div>
-            </div>
+					<!--Channelname-->
+					<label class="control-label">Live Name</label>
+					<div class="controls">
+						<div class="input-prepend">
+							<span class="add-on"><i class="icon-signal"></i></span>
+							<input style="width:210px" placeholder="Enter Live name" id="liveURI" type="text">
+						</div>
+					</div>
+
+					<!--URI-->
+					<label class="control-label">Live URI</label>
+					<div class="controls">
+						<div class="input-prepend">
+							<span class="add-on"><i class="icon-globe"></i></span>
+							<input style="width:210px" placeholder="Enter URI" id="liveURI" type="text">
+						</div>
+					</div>
+
+					<!-- Description -->
+					<label class="control-label">Description</label>
+					<div class="controls">
+						<div class="textarea">
+							<textarea style="width:240px; height:120px;"maxlength="140" type="txt" placeholder="Brief introduction" id="Desc">
+							</textarea>
+						</div>
+					</div>
+				</div>
            　
-　　　　　　　 <!--isono set-->
-            <div class="tab-pane" id="2">
+       　　　　　 <!--isono set-->
+				<div class="tab-pane" id="2">
                 イソノイソノイソノ
-            </div><br>
+                </div><br>
+			</div>
+		</div>
 
-        </div>
-    </div>   
-    
-    <button class="btn btn-warning" type="submit"><i class="icon-facetime-video icon-white"></i> 配信開始</button>
-    
-    </form>
-    </div>
+		<button class="btn btn-block btn-warning" type="submit"><i class="icon-facetime-video icon-white">
+        </i> 配信開始</button>
+
+	</form>
+</div>
 }
