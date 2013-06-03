@@ -27,21 +27,21 @@ public class CommentTest {
     public void ハッシュマップのコレクションにちゃんと入ってるか(){
         //stream1に３つ追加
         Comment comment = new Comment("name1", "contect", "tag1", "stream1");
-        CommentCenter.AddComment(comment);
+        CommentCenter.addComment(comment);
         comment = new Comment("name2", "contect", "tag1", "stream1");
-        CommentCenter.AddComment(comment);
+        CommentCenter.addComment(comment);
         comment = new Comment("name3", "contect", "tag1", "stream1");
-        CommentCenter.AddComment(comment);
+        CommentCenter.addComment(comment);
         
         //stream2に2つ
         comment = new Comment("name1", "contect", "tag1", "stream2");
-        CommentCenter.AddComment(comment);
+        CommentCenter.addComment(comment);
         comment = new Comment("name2", "contect", "tag1", "stream2");
-        CommentCenter.AddComment(comment);
+        CommentCenter.addComment(comment);
         
         //stream3に1つ
         comment = new Comment("name1", "contect", "tag1", "stream3");
-        CommentCenter.AddComment(comment);
+        CommentCenter.addComment(comment);
         
         HashMap<String, List<Comment>> map = CommentCenter.commentListMap;
         
@@ -66,17 +66,17 @@ public class CommentTest {
         Set<String> set= CommentCenter.commentListMap.keySet();
         
         Comment comment = new Comment("name1", "contect1", "tag1", "stream1");
-        CommentCenter.AddComment(comment);
+        CommentCenter.addComment(comment);
        assertThat(set.contains("stream1")).isEqualTo(true);
        assertThat(set.size()).isEqualTo(1);
        
        comment = new Comment("name2", "contect2", "tag2", "stream2");
-       CommentCenter.AddComment(comment);
+       CommentCenter.addComment(comment);
        assertThat(set.contains("stream2")).isEqualTo(true);
        assertThat(set.size()).isEqualTo(2);
        
        comment = new Comment("name3", "contect3", "tag3", "stream2");
-       CommentCenter.AddComment(comment);
+       CommentCenter.addComment(comment);
        assertThat(set.size()).isEqualTo(2);
     }
     

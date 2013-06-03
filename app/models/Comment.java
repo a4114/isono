@@ -16,7 +16,7 @@ public final class Comment {
     private final Timestamp timestamp;
 
     // falseで非表示
-    boolean IsEnabled = true;
+    boolean isEnabled = true;
 
     //Getter
     public String getUserName() {
@@ -42,12 +42,12 @@ public final class Comment {
         this.context = context;
         this.tag = new CommentTag(tagString);
         this.channelURI = channelURI;
-        CheckNGComment();
+        checkNGComment();
     }
 
 
     // NGコメントちぇっく
-    private void CheckNGComment() {
+    private void checkNGComment() {
         System.out.println("[CommentServer]-[CheckNGComment]:実装してない");
 
         return;
