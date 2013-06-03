@@ -2,21 +2,21 @@
 
 @main("配信ページ") {
 <div class="container-fluid">   
-    
     <h1>配信ページ</h1>
         FMS URL：rtmp://nc07.ff-in.dwango.co.jp:1935/hls/<br>
         Stream：@chURI<br>    
-    <video width="480" height="360" controls>
-        <source src="movie.mp4" type="video/mp4">
-        <source src="movie.ogg" type="video/ogg">
+     
+    <video width="640" height="480" controls autoplay>
+        <source src="http://nc07.ff-in.dwango.co.jp/hls/@(chURI).m3u8" type="video/mp4">
         Your browser does not support the video tag.
-    </video>
+    </video></br>
+
+<!--TODO : Bootstrap Switch -->
     
     <!-- 配信者コメント -->
-    <form id="commentForm">
-        <input id="commentOfBroadcaster" type="text" name="text" placeholder="comment" />
-        <input class="btn-warning" type="submit" value="Comment">
+    <form class="input-append" id="commentForm" action="./broadcast/@chURI" method="POST">
+    	<input id="broCmt" type="text" name="text" placeholder="Enter comment"/>
+        <button class="btn btn-warning" type="submit"><i class="icon-comment icon-white"></i> 投稿</button>
     </form>
-    
 <div>
 }

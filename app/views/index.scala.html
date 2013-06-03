@@ -2,26 +2,49 @@
 
 @main(title) {
     <div class="container-fluid">
-    　　　<h1>メインページ</h1>
-         <div class="row-fluid">
-             <div class="span10">
-                 <form class="form-search">
-                 <div class="input-append">
-                 <input type="text" class="input-medium search-query" placeholder="Search">
-                 <button type="submit" class="btn"><i class="icon-search"></i></button>
-                 </div>
-                 </form>
-             </div>
-         </div>               
-         
-        <ul class="nav nav-list">  
+        <h1>GrepHikari</h1>    
+        <fieldset>
+        <div style="float:left;"><h4>Logo</h4></div>
+
+        <div style="float:right;"
+        <form >
+            <div class="input-append">
+                <input type="text" placeholder="Search">
+                <button type="submit" class="btn"><i class="icon-search"></i></button>
+            </div>
+        </form>
+        </div>
+        </fieldset>
+        <form>
+            <button type="submit" class="btn-primary btn btn-block">Login with Twitter Account</button>
+        </form>
+
+            <ul class="nav nav-list">  
             @for(channel <- channelList){
-                <li><a href="/watch/@channel.getChannelURI()">@channel.getChannelName() (@channel.getChannelURI())</a></li>
-                <div id="@channel.getChannelName()" class="collapse">description</div>
-                <li class="divider"></li> 
+                <li>
+                    <a href="/watch/@channel.getChannelURI()">@channel.getChannelName() (@channel.getChannelURI())</a>
+                </li>
+                <div class="accordion-group">
+                    <div class="accordion-heading">
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#@channel.getChannelName()">
+                            <i class="icon-chevron-down">
+                            </i>
+                        </a>
+                    </div>
+                    <div id="@channel.getChannelName()" class="accordion-body collapse">
+                        <div class="accordion-inner">this is my channel</div>
+                    </div>
+                </div>
+                <li class="divider">
+                </li> 
             }
-        </ul> 
-     
-      <div><a class="btn btn-warning" href="/newChannel">配信ページへ</i></a></div>          
-   </div>
+        </ul>
+            <br>
+                <div>
+                    <a class="btn btn-block btn-warning" href="/newChannel">配信ページへ  <i class="icon-arrow-right icon-white">
+                        </i>
+                    </a>
+                </div>
+            </div>
+   
 }
