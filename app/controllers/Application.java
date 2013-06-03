@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import models.Channel;
-import models.CometAddvanced;
+import models.CometAdvanced;
 import models.Comment;
 import models.User;
 import play.cache.Cache;
@@ -27,10 +27,10 @@ public class Application extends Controller {
     private static int liveCount = 0;
 
     public static void AddUserToChannel(String channelURI,
-            CometAddvanced cometAddvanced) throws Exception {
+            CometAdvanced cometAddvanced) throws Exception {
 
         if (channelList.containsKey(channelURI)) {
-            channelList.get(channelURI).AddWatchingUser(cometAddvanced);
+            channelList.get(channelURI).addWatchingUser(cometAddvanced);
         } else {
             throw new Exception("不正な枠URIです");
         }
@@ -59,7 +59,7 @@ public class Application extends Controller {
     public static Result connectComet(String channelURI) {
 
         
-        CometAddvanced ca = new CometAddvanced("parent.getComment", channelURI,
+        CometAdvanced ca = new CometAdvanced("parent.getComment", channelURI,
                 new User());
 
         // CometAddvancedを追加　初期化が違うくらいで後は一緒

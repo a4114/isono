@@ -13,7 +13,7 @@ public class CometUserManager extends UntypedActor {
 
     ArrayList<Comet> cometList=new ArrayList<>();
     
-    public void RemoveComet(CometAddvanced comet){
+    public void RemoveComet(CometAdvanced comet){
         cometList.remove(comet);
     }
     
@@ -21,13 +21,13 @@ public class CometUserManager extends UntypedActor {
     public void onReceive(final Object arg0) throws Exception {
         
         //登録申請がきた
-        if(arg0 instanceof CometAddvanced){
-            cometList.add((CometAddvanced)arg0);
-            ((CometAddvanced)arg0).onDisconnected(new Callback0() {
+        if(arg0 instanceof CometAdvanced){
+            cometList.add((CometAdvanced)arg0);
+            ((CometAdvanced)arg0).onDisconnected(new Callback0() {
                 
                 @Override
                 public void invoke() throws Throwable {
-                   RemoveComet((CometAddvanced)arg0);
+                   RemoveComet((CometAdvanced)arg0);
                 }
             });
         }

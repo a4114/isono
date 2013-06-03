@@ -44,12 +44,12 @@ public class Channel implements Comparable<Channel>{
     }
     
     //視聴者をリストに追加する
-    public void AddWatchingUser(CometAddvanced cometAddvanced) {
+    public void addWatchingUser(CometAdvanced cometAddvanced) {
         cometUserManager.tell(cometAddvanced,cometUserManager);
     }
     
     //最新コメントをリストに追加する
-    private void AddCommentList(Comment comment){
+    private void addCommentList(Comment comment){
         commentList.add(comment);
     }
    

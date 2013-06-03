@@ -15,6 +15,7 @@ public final class User {
     public User( Twitter twitter ,String IPAddress) {
         this.twitter = twitter;
         this.IPAddress = IPAddress;
+        
     }
     
     public User() {
