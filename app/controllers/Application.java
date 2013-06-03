@@ -26,7 +26,7 @@ public class Application extends Controller {
     private static HashMap<String, Channel> channelList = new HashMap<>();
     private static int liveCount = 0;
 
-    public static void AddUserToChannel(String channelURI,
+    public static void addUserToChannel(String channelURI,
             CometAdvanced cometAddvanced) throws Exception {
 
         if (channelList.containsKey(channelURI)) {
@@ -148,7 +148,7 @@ public class Application extends Controller {
 
     public static Result checkLoginState() {
   
-        if(IsLogined()){
+        if(isLogined()){
             return redirect("/");
         }else{
             return redirect("/login");
@@ -156,7 +156,7 @@ public class Application extends Controller {
         
     }
     
-    private static boolean IsLogined(){
+    private static boolean isLogined(){
         
         if(!session().containsKey("TwitterID")){
             return false;
@@ -168,7 +168,7 @@ public class Application extends Controller {
     
 
 
-    public static void UpdateComment(Comment comment) {
+    public static void updateComment(Comment comment) {
     }
 
     /*

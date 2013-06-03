@@ -30,7 +30,7 @@ public final class CommentCenter {
         
         
         //コメントを投げる
-        Application.UpdateComment(comment);
+        Application.updateComment(comment);
         
     }
     

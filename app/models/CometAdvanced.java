@@ -22,7 +22,7 @@ public class CometAdvanced extends Comet {
     @Override
     public void onConnected() {
         try{
-            Application.AddUserToChannel(channelURI, this);
+            Application.addUserToChannel(channelURI, this);
         }catch(Exception e){
             System.err.println(e.getMessage());
             e.printStackTrace();
