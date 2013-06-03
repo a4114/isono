@@ -4,9 +4,8 @@
     <div class="container-fluid">
         <h1>GrepHikari</h1>    
         <fieldset>
-        <div style="float:left;"><h4>Logo</h4></div>
-
-        <div style="float:right;"
+        <div style="float:left;"><img src="@routes.Assets.at("/images/favicon.png")" alt="logo"/></div>
+        <div style="float:right;">
         <form >
             <div class="input-append">
                 <input type="text" placeholder="Search">
@@ -15,31 +14,32 @@
         </form>
         </div>
         </fieldset>
+
         <form>
-            <button type="submit" class="btn-primary btn btn-block">Login with Twitter Account</button>
-        </form>
+            <div class="row-fluid"> 
+				<div style="width:49%; float:left;">
+				<a class="btn-primary btn btn-block"  href="/login">Tでログイン</a>
+				</div>
+				<div style="width:49%; float:right">
+				<a class="btn-primary btn btn-block"  href="/login" >Fでログイン</a>        
+				</div>
+			</div>
+		</form>
 
             <ul class="nav nav-list">  
             @for(channel <- channelList){
-                <li>
-                    <a href="/watch/@channel.getChannelURI()">@channel.getChannelName() (@channel.getChannelURI())</a>
-                </li>
-                <div class="accordion-group">
-                    <div class="accordion-heading">
-                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#@channel.getChannelName()">
-                            <i class="icon-chevron-down">
-                            </i>
-                        </a>
-                    </div>
+                    	<a style="float;left" href="/watch/@channel.getChannelURI()"> <img style="float:left" src="@routes.Assets.at("/images/favicon.png")" /></a>
+						<a style="float;left" href="/watch/@channel.getChannelURI()"> @channel.getChannelName() (@channel.getChannelURI())</a>
+                        <a style="float:right"class="accordion-toggle" data-toggle="collapse" data-target="#@channel.getChannelName()">
+                            <i class="icon-chevron-down"></i>
+                        </a><br>
+                    
                     <div id="@channel.getChannelName()" class="accordion-body collapse">
-                        <div class="accordion-inner">this is my channel</div>
+                        <div class="accordion-inner">channel.getDesp</div>
                     </div>
-                </div>
-                <li class="divider">
-                </li> 
+                <li class="divider"></li> 
             }
-        </ul>
-            <br>
+        </ul><br>
                 <div>
                     <a class="btn btn-block btn-warning" href="/newChannel">配信ページへ  <i class="icon-arrow-right icon-white">
                         </i>
