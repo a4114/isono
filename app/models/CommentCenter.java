@@ -13,7 +13,7 @@ public final class CommentCenter {
     // Value : コメントリスト
     public final static HashMap<String,List<Comment>> commentListMap = new HashMap<>();
 
-    public static void AddComment(Comment comment){
+    public static void addComment(Comment comment){
         String channelURI = comment.getChannelURI();
         
         //既にコレクションが存在するか？

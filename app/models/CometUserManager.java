@@ -13,9 +13,10 @@ public class CometUserManager extends UntypedActor {
 
     ArrayList<Comet> cometList=new ArrayList<>();
     
-    public void RemoveComet(CometAdvanced comet){
+    public void removeComet(CometAdvanced comet){
         cometList.remove(comet);
     }
+    
     
     @Override
     public void onReceive(final Object arg0) throws Exception {
@@ -27,7 +28,7 @@ public class CometUserManager extends UntypedActor {
                 
                 @Override
                 public void invoke() throws Throwable {
-                   RemoveComet((CometAdvanced)arg0);
+                   removeComet((CometAdvanced)arg0);
                 }
             });
         }
