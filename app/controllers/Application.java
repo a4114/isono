@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Map;
 
 import models.Channel;
-import models.CometAddvanced;
+import models.CometAdvanced;
 import models.Comment;
 import models.User;
 import play.cache.Cache;
@@ -26,11 +26,11 @@ public class Application extends Controller {
     private static HashMap<String, Channel> channelList = new HashMap<>();
     private static int liveCount = 0;
 
-    public static void AddUserToChannel(String channelURI,
-            CometAddvanced cometAddvanced) throws Exception {
+    public static void addUserToChannel(String channelURI,
+            CometAdvanced cometAddvanced) throws Exception {
 
         if (channelList.containsKey(channelURI)) {
-            channelList.get(channelURI).AddWatchingUser(cometAddvanced);
+            channelList.get(channelURI).addWatchingUser(cometAddvanced);
         } else {
             throw new Exception("不正な枠URIです");
         }
@@ -59,7 +59,7 @@ public class Application extends Controller {
     public static Result connectComet(String channelURI) {
 
         
-        CometAddvanced ca = new CometAddvanced("parent.getComment", channelURI,
+        CometAdvanced ca = new CometAdvanced("parent.getComment", channelURI,
                 new User());
 
         // CometAddvancedを追加　初期化が違うくらいで後は一緒
@@ -148,7 +148,7 @@ public class Application extends Controller {
 
     public static Result checkLoginState() {
   
-        if(IsLogined()){
+        if(isLogined()){
             return redirect("/");
         }else{
             return redirect("/login");
@@ -156,7 +156,7 @@ public class Application extends Controller {
         
     }
     
-    private static boolean IsLogined(){
+    private static boolean isLogined(){
         
         if(!session().containsKey("TwitterID")){
             return false;
@@ -168,7 +168,7 @@ public class Application extends Controller {
     
 
 
-    public static void UpdateComment(Comment comment) {
+    public static void updateComment(Comment comment) {
     }
 
     /*
